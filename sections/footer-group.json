@@ -1,0 +1,64 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "link_list_xNTejT": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Navigation",
+            "menu": "main-menu"
+          }
+        },
+        "link_list_WxmxhC": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Info",
+            "menu": "footer"
+          }
+        },
+        "text_akPJiR": {
+          "type": "text",
+          "settings": {
+            "heading": "Coffeetopia ☕️",
+            "subtext": "<p><strong>📍 6001 Destination Pkwy, Orlando, FL 32819, United States</strong></p><p>📞 +1 (954) 556-7667</p><p>📫 support@coffeetopia.com</p><p></p>"
+          }
+        }
+      },
+      "block_order": [
+        "link_list_xNTejT",
+        "link_list_WxmxhC",
+        "text_akPJiR"
+      ],
+      "custom_css": [],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "newsletter_enable": true,
+        "newsletter_heading": "For Coffee Lovers ❤️",
+        "enable_follow_on_shop": true,
+        "show_social": true,
+        "enable_country_selector": true,
+        "enable_language_selector": true,
+        "payment_enable": true,
+        "show_policy": true,
+        "margin_top": 0,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}
