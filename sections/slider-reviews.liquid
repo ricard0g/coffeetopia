@@ -1,0 +1,106 @@
+<h2>{{ section.settings.heading }}</h2>
+<div class="swiper mySwiper">
+  <div class="swiper-wrapper">
+    {% for block in section.blocks %}
+      <article class="swiper-slide">
+        <header>
+          {% comment %} <img > {% endcomment %}
+        </header>
+        <main>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan mi ac elementum tincidunt. Mauris
+            tellus turpis, blandit at arcu ac, porta rhoncus ligula. Mauris nec ante id dui imperdiet luctus. Sed sed
+            nulla nunc. Mauris venenatis velit tortor, in tincidunt sapien consectetur ut.
+          </p>
+        </main>
+        <footer>
+          <figure>
+            {% comment %}
+              <img
+                class="review-img"
+                src="https://randomuser.me/portraits/men/3.jpg"
+              >
+            {% endcomment %}
+            <figcaption>John Doe</figcaption>
+          </figure>
+        </footer>
+      </article>
+    {% endfor %}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Reviews Slider",
+  "tag": "section",
+  "class": "reviews-slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Some reviews"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "text",
+          "id": "review_text",
+          "label": "Review Text",
+          "info": "Here goes the review of the customer"
+        },
+        {
+          "type": "image_picker",
+          "id": "customer_image",
+          "label": "Customer Image",
+          "info": "Photo of the customer"
+        },
+        {
+          "type": "text",
+          "id": "customer_name",
+          "label": "Customer Name",
+          "placeholder": "John Doe",
+          "default": "John Doe"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews Slider",
+      "settings": {
+        "heading": "Join 12,345 happy coffelovers ❤️"
+      },
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan mi ac elementum tincidunt. Mauris tellus turpis, blandit at arcu ac, porta rhoncus ligula.",
+            "customer_image": "https://randomuser.me/portraits/men/3.jpg",
+            "customer_name": "John Doe"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan mi ac elementum tincidunt. Mauris tellus turpis, blandit at arcu ac, porta rhoncus ligula.",
+            "customer_image": "https://randomuser.me/portraits/men/3.jpg",
+            "customer_name": "John Doe"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan mi ac elementum tincidunt. Mauris tellus turpis, blandit at arcu ac, porta rhoncus ligula.",
+            "customer_image": "https://randomuser.me/portraits/men/3.jpg",
+            "customer_name": "John Doe"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
