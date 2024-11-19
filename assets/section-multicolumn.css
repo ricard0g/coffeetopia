@@ -1,3 +1,7 @@
+.rte p {
+  text-wrap: balance;
+}
+
 .multicolumn .title {
   margin: 0;
 }
