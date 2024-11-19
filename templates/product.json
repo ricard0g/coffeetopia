@@ -98,7 +98,8 @@
         "column_BVKRXP": {
           "type": "column",
           "settings": {
-            "title": "Column",
+            "image": "shopify://shop_images/tree-svgrepo-com.svg",
+            "title": "Plant a tree for 3rd order",
             "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
             "link_label": "",
             "link": ""
@@ -107,7 +108,8 @@
         "column_9PEjKN": {
           "type": "column",
           "settings": {
-            "title": "Column",
+            "image": "shopify://shop_images/coffee-machine-svgrepo-com.svg",
+            "title": "Roasted by Hand in FL",
             "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
             "link_label": "",
             "link": ""
