@@ -138,6 +138,40 @@
         "padding_bottom": 36
       }
     },
+    "slider_reviews_gFLxFy": {
+      "type": "slider-reviews",
+      "blocks": {
+        "review_ztUCKA": {
+          "type": "review",
+          "settings": {
+            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rutrum iaculis tortor, sit amet pellentesque elit malesuada quis. Pellentesque facilisis rhoncus varius.",
+            "customer_name": "John Doe"
+          }
+        },
+        "review_eVaEby": {
+          "type": "review",
+          "settings": {
+            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rutrum iaculis tortor, sit amet pellentesque elit malesuada quis. Pellentesque facilisis rhoncus varius.",
+            "customer_name": "John Doe"
+          }
+        },
+        "review_dfj63c": {
+          "type": "review",
+          "settings": {
+            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rutrum iaculis tortor, sit amet pellentesque elit malesuada quis. Pellentesque facilisis rhoncus varius.",
+            "customer_name": "John Doe"
+          }
+        }
+      },
+      "block_order": [
+        "review_ztUCKA",
+        "review_eVaEby",
+        "review_dfj63c"
+      ],
+      "settings": {
+        "heading": "Join 1,320 coffeelovers ❤️"
+      }
+    },
     "related-products": {
       "type": "related-products",
       "settings": {
@@ -160,6 +194,7 @@
   "order": [
     "main",
     "multicolumn_jwY6LB",
+    "slider_reviews_gFLxFy",
     "related-products"
   ]
 }
