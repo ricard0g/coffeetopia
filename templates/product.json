@@ -161,12 +161,28 @@
             "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rutrum iaculis tortor, sit amet pellentesque elit malesuada quis. Pellentesque facilisis rhoncus varius.",
             "customer_name": "John Doe"
           }
+        },
+        "review_HMxwQr": {
+          "type": "review",
+          "settings": {
+            "review_text": "",
+            "customer_name": ""
+          }
+        },
+        "review_wqUNtF": {
+          "type": "review",
+          "settings": {
+            "review_text": "",
+            "customer_name": ""
+          }
         }
       },
       "block_order": [
         "review_ztUCKA",
         "review_eVaEby",
-        "review_dfj63c"
+        "review_dfj63c",
+        "review_HMxwQr",
+        "review_wqUNtF"
       ],
       "settings": {
         "heading": "Join 1,320 coffeelovers ❤️"
