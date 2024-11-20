@@ -1,33 +1,76 @@
+{{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+{{ 'slider-reviews.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer></script>
+
 <h2>{{ section.settings.heading }}</h2>
 <div class="swiper mySwiper">
   <div class="swiper-wrapper">
     {% for block in section.blocks %}
-      <article class="swiper-slide">
-        <header>
-          {% comment %} <img > {% endcomment %}
-        </header>
-        <main>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan mi ac elementum tincidunt. Mauris
-            tellus turpis, blandit at arcu ac, porta rhoncus ligula. Mauris nec ante id dui imperdiet luctus. Sed sed
-            nulla nunc. Mauris venenatis velit tortor, in tincidunt sapien consectetur ut.
-          </p>
-        </main>
-        <footer>
-          <figure>
-            {% comment %}
-              <img
-                class="review-img"
-                src="https://randomuser.me/portraits/men/3.jpg"
-              >
-            {% endcomment %}
-            <figcaption>John Doe</figcaption>
-          </figure>
-        </footer>
-      </article>
+      {% case block.type %}
+        {% when 'review' %}
+          <article class="swiper-slide">
+            <header>
+              <img src="{{ 'quotes.svg' | asset_url }}" width="30px" height="30px">
+            </header>
+            <main>
+              <p>"{{ block.settings.review_text | strip }}"</p>
+            </main>
+            <footer>
+              <figure>
+                {% if block.settings.customer_image != blank %}
+                  {{
+                    block.settings.customer_image
+                    | image_url: width: 100
+                    | image_tag: alt: 'Customer Photo', class: 'review-img', loading: 'lazy'
+                  }}
+                {% else %}
+                  <img class="review-img" src="{{ 'customer-default-img.jpg' | asset_url }}" width="100" height="auto">
+                {% endif %}
+                <figcaption>John Doe</figcaption>
+              </figure>
+            </footer>
+          </article>
+      {% endcase %}
     {% endfor %}
   </div>
+  <div class="swiper-pagination"></div>
 </div>
+
+<script>
+  console.log(document.querySelector('.swiper-pagination'));
+  var swiper = new Swiper('.mySwiper', {
+    slidesPerView: 1,
+    slidesOffsetBefore: 30,
+    slidesPerGroup: 1,
+    centeredSlides: true,
+    centerSlidesBounds: true,
+    breakpoints: {
+      989: {
+        slidesPerView: 3,
+        slidesPerGroup: 3,
+        spaceBetween: 10,
+        centeredSlides: false,
+        longSwipes: false,
+        centerSlidesBounds: false,
+        longSwipes: false,
+        autoHeight: true,
+      },
+      750: {
+        slidesPerView: 2,
+        slidesPerGroup: 2,
+        spaceBetween: 25,
+        centeredSlides: false,
+        centerSlidesBounds: false,
+        longSwipes: false,
+        autoHeight: true,
+      },
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'bullets',
+    },
+  });
+</script>
 {% schema %}
 {
   "name": "Reviews Slider",
@@ -38,7 +81,7 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Some reviews"
+      "default": "Some Reviews"
     }
   ],
   "blocks": [
@@ -62,8 +105,7 @@
           "type": "text",
           "id": "customer_name",
           "label": "Customer Name",
-          "placeholder": "John Doe",
-          "default": "John Doe"
+          "placeholder": "John Doe"
         }
       ]
     }
@@ -72,29 +114,13 @@
     {
       "name": "Reviews Slider",
       "settings": {
-        "heading": "Join 12,345 happy coffelovers ❤️"
+        "heading": "Join 1,320 coffeelovers ❤️"
       },
       "blocks": [
         {
           "type": "review",
           "settings": {
-            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan mi ac elementum tincidunt. Mauris tellus turpis, blandit at arcu ac, porta rhoncus ligula.",
-            "customer_image": "https://randomuser.me/portraits/men/3.jpg",
-            "customer_name": "John Doe"
-          }
-        },
-        {
-          "type": "review",
-          "settings": {
-            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan mi ac elementum tincidunt. Mauris tellus turpis, blandit at arcu ac, porta rhoncus ligula.",
-            "customer_image": "https://randomuser.me/portraits/men/3.jpg",
-            "customer_name": "John Doe"
-          }
-        },
-        {
-          "type": "review",
-          "settings": {
-            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan mi ac elementum tincidunt. Mauris tellus turpis, blandit at arcu ac, porta rhoncus ligula.",
+            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rutrum iaculis tortor, sit amet pellentesque elit malesuada quis. Pellentesque facilisis rhoncus varius.",
             "customer_image": "https://randomuser.me/portraits/men/3.jpg",
             "customer_name": "John Doe"
           }
