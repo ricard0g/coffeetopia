@@ -8,12 +8,22 @@
     {% for block in section.blocks %}
       {% case block.type %}
         {% when 'review' %}
-          <article class="swiper-slide">
+          <article class="swiper-slide" {{ block.shopify_attributes }}>
             <header>
               <img src="{{ 'quotes.svg' | asset_url }}" width="30px" height="30px">
             </header>
             <main>
-              <p>"{{ block.settings.review_text | strip }}"</p>
+              {% assign str_size = block.settings.review_text | size %}
+              {%- if str_size > 0 -%}
+                <div class="review-text">
+                  {{- block.settings.review_text  -}}
+                </div>
+              {%- else -%}
+                <p class="review-text">
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rutrum iaculis tortor, sit amet
+                  pellentesque elit malesuada quis. Pellentesque facilisis rhoncus varius."
+                </p>
+              {%- endif -%}
             </main>
             <footer>
               <figure>
@@ -24,7 +34,7 @@
                     | image_tag: alt: 'Customer Photo', class: 'review-img', loading: 'lazy'
                   }}
                 {% else %}
-                  <img class="review-img" src="{{ 'customer-default-img.jpg' | asset_url }}" width="100" height="auto">
+                  <img class="review-img" src="{{ 'customer-default-img.jpg' | asset_url }}" width="30" height="auto">
                 {% endif %}
                 <figcaption>John Doe</figcaption>
               </figure>
@@ -55,11 +65,18 @@
       "name": "Review",
       "settings": [
         {
-          "type": "text",
+          "type": "header",
+          "content": "Review Settings"
+        },
+        {
+          "type": "paragraph",
+          "content": "Here goes the review of the customer. It's important that you leverage the most important words of each review for the customer. Highlight those words of the review that are really important for your customers, these will convey to your customers how good your products are."
+        },
+        {
+          "type": "richtext",
           "id": "review_text",
           "label": "Review Text",
-          "default": "Write the awesome review your customer gave you!",
-          "info": "Here goes the review of the customer"
+          "info": "If you want to Underline text use CMD + U on Mac, or CTRL + U on Windows."
         },
         {
           "type": "image_picker",
@@ -86,21 +103,18 @@
         {
           "type": "review",
           "settings": {
-            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rutrum iaculis tortor, sit amet pellentesque elit malesuada quis. Pellentesque facilisis rhoncus varius.",
             "customer_name": "John Doe"
           }
         },
         {
           "type": "review",
           "settings": {
-            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rutrum iaculis tortor, sit amet pellentesque elit malesuada quis. Pellentesque facilisis rhoncus varius.",
             "customer_name": "John Doe"
           }
         },
         {
           "type": "review",
           "settings": {
-            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rutrum iaculis tortor, sit amet pellentesque elit malesuada quis. Pellentesque facilisis rhoncus varius.",
             "customer_name": "John Doe"
           }
         }

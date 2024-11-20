@@ -138,38 +138,59 @@
         "padding_bottom": 36
       }
     },
-    "slider_reviews_gFLxFy": {
+    "slider_reviews_hjXPKH": {
       "type": "slider-reviews",
       "blocks": {
-        "review_ztUCKA": {
+        "review_nUCNdm": {
           "type": "review",
           "settings": {
-            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rutrum iaculis tortor, sit amet pellentesque elit malesuada quis. Pellentesque facilisis rhoncus varius.",
+            "review_text": "<p>hola</p>",
             "customer_name": "John Doe"
           }
         },
-        "review_eVaEby": {
+        "review_67R6Ga": {
           "type": "review",
           "settings": {
-            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rutrum iaculis tortor, sit amet pellentesque elit malesuada quis. Pellentesque facilisis rhoncus varius.",
+            "review_text": "",
             "customer_name": "John Doe"
           }
         },
-        "review_dfj63c": {
+        "review_nrzGek": {
           "type": "review",
           "settings": {
-            "review_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rutrum iaculis tortor, sit amet pellentesque elit malesuada quis. Pellentesque facilisis rhoncus varius.",
+            "review_text": "",
             "customer_name": "John Doe"
           }
         },
-        "review_HMxwQr": {
+        "review_DrnhpT": {
           "type": "review",
           "settings": {
-            "review_text": "Hello",
+            "review_text": "",
             "customer_name": ""
           }
         },
-        "review_wqUNtF": {
+        "review_RreUFH": {
+          "type": "review",
+          "settings": {
+            "review_text": "",
+            "customer_name": ""
+          }
+        },
+        "review_WzjyQV": {
+          "type": "review",
+          "settings": {
+            "review_text": "",
+            "customer_name": ""
+          }
+        },
+        "review_LgEQ6g": {
+          "type": "review",
+          "settings": {
+            "review_text": "",
+            "customer_name": ""
+          }
+        },
+        "review_bPHLbf": {
           "type": "review",
           "settings": {
             "review_text": "",
@@ -178,11 +199,14 @@
         }
       },
       "block_order": [
-        "review_ztUCKA",
-        "review_eVaEby",
-        "review_dfj63c",
-        "review_HMxwQr",
-        "review_wqUNtF"
+        "review_nUCNdm",
+        "review_67R6Ga",
+        "review_nrzGek",
+        "review_DrnhpT",
+        "review_RreUFH",
+        "review_WzjyQV",
+        "review_LgEQ6g",
+        "review_bPHLbf"
       ],
       "settings": {
         "heading": "Join 1,320 coffeelovers ❤️"
@@ -210,7 +234,7 @@
   "order": [
     "main",
     "multicolumn_jwY6LB",
-    "slider_reviews_gFLxFy",
+    "slider_reviews_hjXPKH",
     "related-products"
   ]
 }
