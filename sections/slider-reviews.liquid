@@ -36,6 +36,7 @@
   <div class="swiper-pagination"></div>
 </div>
 
+<script src="{{ 'swiper-bundle.min.js' | asset_url }}" async></script>
 <script>
   console.log(document.querySelector('.swiper-pagination'));
   var swiper = new Swiper('.mySwiper', {
@@ -72,7 +73,6 @@
   });
 </script>
 
-<script src="{{ 'swiper-bundle.min.js' | asset_url }}" async></script>
 {% schema %}
 {
   "name": "Reviews Slider",
