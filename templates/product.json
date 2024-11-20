@@ -63,6 +63,15 @@
             "content": "",
             "page": ""
           }
+        },
+        "collapsible_tab_cQ4baf": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Quantity",
+            "icon": "box",
+            "content": "",
+            "page": ""
+          }
         }
       },
       "block_order": [
@@ -74,7 +83,8 @@
         "buy_buttons",
         "description",
         "share",
-        "collapsible_tab_rM9WUA"
+        "collapsible_tab_rM9WUA",
+        "collapsible_tab_cQ4baf"
       ],
       "settings": {
         "enable_sticky_info": true,
