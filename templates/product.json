@@ -60,7 +60,7 @@
           "settings": {
             "heading": "Shipping Time",
             "icon": "plane",
-            "content": "",
+            "content": "<p>{{ product.metafields.custom.shipping_time.value }}</p>",
             "page": ""
           }
         },
@@ -69,7 +69,7 @@
           "settings": {
             "heading": "Quantity",
             "icon": "box",
-            "content": "",
+            "content": "<p>{{ product.metafields.custom.quantity_per_bag | metafield_tag }}</p>",
             "page": ""
           }
         }
