@@ -1,3 +1,7 @@
+.section {
+  margin: 5vh 0;
+}
+
 .rte p {
   text-wrap: balance;
 }

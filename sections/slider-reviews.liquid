@@ -2,7 +2,7 @@
 {{ 'slider-reviews.css' | asset_url | stylesheet_tag }}
 
 <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer></script>
-<h2>{{ section.settings.heading }}</h2>
+<h2 class="review-section-heading">{{ section.settings.heading }}</h2>
 <div class="swiper mySwiper">
   <div class="swiper-wrapper">
     {% for block in section.blocks %}
