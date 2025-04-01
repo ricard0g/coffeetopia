@@ -11,6 +11,7 @@ if (!customElements.get('product-form')) {
         this.cart = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
         this.submitButton = this.querySelector('[type="submit"]');
         this.submitButtonText = this.submitButton.querySelector('span');
+        this.cartToast = document.getElementById('cart-toast');
 
         if (document.querySelector('cart-drawer')) this.submitButton.setAttribute('aria-haspopup', 'dialog');
 
@@ -97,6 +98,7 @@ if (!customElements.get('product-form')) {
             if (this.cart && this.cart.classList.contains('is-empty')) this.cart.classList.remove('is-empty');
             if (!this.error) this.submitButton.removeAttribute('aria-disabled');
             this.querySelector('.loading__spinner').classList.add('hidden');
+            this.updateCartToast();
           });
       }
 
@@ -127,6 +129,27 @@ if (!customElements.get('product-form')) {
 
       get variantIdInput() {
         return this.form.querySelector('[name=id]');
+      }
+
+      async updateCartToast() {
+        try {
+          const response = await fetch(`${routes.cart_url}.js`);
+
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+
+          const cartJson = await response.json();
+          console.log('Cart Now', cartJson);
+          const cartQuantity = cartJson.item_count;
+          console.log('Cart Quantity', cartQuantity);
+
+          console.log('Before', this.cartToast.dataset.itemCount);
+          this.cartToast.dataset.itemCount = cartQuantity;
+          console.log('After', this.cartToast.dataset.itemCount);
+        } catch (e) {
+          console.error('Error fetching cart data:', e);
+        }
       }
     }
   );
