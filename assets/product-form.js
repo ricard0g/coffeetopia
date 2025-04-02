@@ -141,12 +141,12 @@ if (!customElements.get('product-form')) {
 
           const cartJson = await response.json();
           console.log('Cart Now', cartJson);
-          const cartQuantity = cartJson.item_count;
-          console.log('Cart Quantity', cartQuantity);
+          const cartTotalPrice = cartJson.total_price;
+          console.log('Cart Quantity', cartTotalPrice);
 
-          console.log('Before', this.cartToast.dataset.itemCount);
-          this.cartToast.dataset.itemCount = cartQuantity;
-          console.log('After', this.cartToast.dataset.itemCount);
+          console.log('Before', this.cartToast.dataset.totalPrice);
+          this.cartToast.dataset.totalPrice = cartTotalPrice;
+          console.log('After', this.cartToast.dataset.totalPrice);
         } catch (e) {
           console.error('Error fetching cart data:', e);
         }

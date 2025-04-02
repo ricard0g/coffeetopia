@@ -17,6 +17,7 @@ class CartItems extends HTMLElement {
     super();
     this.lineItemStatusElement =
       document.getElementById('shopping-cart-line-item-status') || document.getElementById('CartDrawer-LineItemStatus');
+    this.cartToast = document.getElementById('cart-toast');
 
     const debouncedOnChange = debounce((event) => {
       this.onChange(event);
@@ -216,6 +217,7 @@ class CartItems extends HTMLElement {
       })
       .finally(() => {
         this.disableLoading(line);
+        this.updateCartToast();
       });
   }
 
@@ -233,6 +235,27 @@ class CartItems extends HTMLElement {
     setTimeout(() => {
       cartStatus.setAttribute('aria-hidden', true);
     }, 1000);
+  }
+
+  async updateCartToast() {
+    try {
+      const response = await fetch(`${routes.cart_url}.js`);
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const cartJson = await response.json();
+      console.log('Cart Now', cartJson);
+      const cartTotalPrice = cartJson.total_price;
+      console.log('Cart Toal Price', cartTotalPrice);
+
+      console.log('Before', this.cartToast.dataset.totalPrice);
+      this.cartToast.dataset.totalPrice = cartTotalPrice;
+      console.log('After', this.cartToast.dataset.totalPrice);
+    } catch (e) {
+      console.error('Error fetching cart data:', e);
+    }
   }
 
   getSectionInnerHTML(html, selector) {
