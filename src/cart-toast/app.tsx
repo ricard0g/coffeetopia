@@ -2,22 +2,24 @@ import { useEffect, useState, useCallback } from 'preact/hooks';
 
 const RewardTier = ({
   tierLevel,
-  minPrice,
   maxPrice,
   cartTotalPrice,
 }: {
   tierLevel: string;
-  minPrice: number;
   maxPrice: number;
   cartTotalPrice: number;
 }) => {
   return (
     <div className={`cart-toast__reward-tier`}>
       <div className={`cart-toast__reward-tier-icon-wrapper`}>
-        <div className={`cart-toast__reward-tier-icon`}>
+        <div
+          className={`cart-toast__reward-tier-icon ${
+            cartTotalPrice > maxPrice ? 'cart-toast__reward-tier-icon-active' : ''
+          }`}
+        >
           <svg
-            width="15px"
-            height="15px"
+            width="20px"
+            height="20px"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
             id="discount"
@@ -35,7 +37,7 @@ const RewardTier = ({
           </svg>
         </div>
         <span className={`cart-toast__reward-tier-text`}>
-          {cartTotalPrice > minPrice && cartTotalPrice < maxPrice ? (
+          {cartTotalPrice < maxPrice ? (
             tierLevel
           ) : (
             <>
@@ -65,8 +67,7 @@ const RewardTier = ({
 
 type RewardTierType = {
   tierLevel: string;
-  minPrice: number;
-  maxPrice?: number;
+  maxPrice: number;
 };
 
 const ProgressBar = ({ cartTotalPrice, maxPrice }: { cartTotalPrice: number; maxPrice: number }) => {
@@ -74,22 +75,19 @@ const ProgressBar = ({ cartTotalPrice, maxPrice }: { cartTotalPrice: number; max
   const rewardTiers: RewardTierType[] = [
     {
       tierLevel: '5% off!',
-      minPrice: 0,
       maxPrice: 18,
     },
     {
       tierLevel: '10% off!',
-      minPrice: 18,
       maxPrice: 36,
     },
     {
       tierLevel: '15% off!',
-      minPrice: 36,
       maxPrice: 54,
     },
     {
       tierLevel: '20% off!',
-      minPrice: 54,
+      maxPrice: 72,
     },
   ];
   return (
@@ -109,7 +107,6 @@ const ProgressBar = ({ cartTotalPrice, maxPrice }: { cartTotalPrice: number; max
                 <RewardTier
                   key={index}
                   tierLevel={tier.tierLevel}
-                  minPrice={tier.minPrice}
                   maxPrice={tier.maxPrice}
                   cartTotalPrice={cartTotalPrice}
                 />
@@ -122,13 +119,69 @@ const ProgressBar = ({ cartTotalPrice, maxPrice }: { cartTotalPrice: number; max
   );
 };
 
+interface CartItem {
+  id?: string | number;
+  properties?: Record<string, string>;
+  quantity?: number;
+  variant_id?: string | number;
+  key?: string;
+  title?: string;
+  price?: number;
+  original_price?: number;
+  discounted_price?: number;
+  line_price?: number;
+  original_line_price?: number;
+  total_discount?: number;
+  discounts?: Array<any>;
+  sku?: string;
+  grams?: number;
+  vendor?: string;
+  taxable?: boolean;
+  product_id?: number;
+  product_has_only_default_variant?: boolean;
+  gift_card?: boolean;
+  final_price?: number;
+  final_line_price?: number;
+  url?: string;
+  featured_image?: Record<string, string | number>;
+  image?: string;
+  handle?: string;
+  requires_shipping?: boolean;
+  product_type?: string;
+  product_title?: string;
+  product_description?: string;
+  variant_title?: string;
+  variant_options?: Array<string>;
+  options_with_values?: Array<{ name: string; value: string }>;
+  line_level_discount_allocations?: Array<any>;
+  line_level_total_discount?: number;
+  quantity_rule?: Record<string, any>;
+  has_components?: boolean;
+  selling_plan_allocation?: any;
+}
+
+interface CartState {
+  token?: string;
+  note?: string;
+  attributes?: Record<string, string>;
+  original_total_price?: number;
+  total_price?: number;
+  total_discount?: number;
+  total_weight?: number;
+  item_count?: number;
+  items?: Array<CartItem>;
+}
+
 export function CartToast({
   cartTotalPrice: initialCartTotalPrice,
   cartCurrency,
+  cartState: initialCartState,
 }: {
   cartTotalPrice: number;
   cartCurrency: string;
+  cartState: CartState;
 }) {
+  const [cartState, setCartState] = useState<CartState>(initialCartState);
   const [cartTotalPrice, setCartTotalPrice] = useState(initialCartTotalPrice / 100);
   const [opened, setOpened] = useState(false);
   const maxPriceBoost: number = 72;
@@ -141,12 +194,32 @@ export function CartToast({
     if (!cartToastElement) return;
 
     const observer = new MutationObserver((mutations) => {
+      let totalPriceChanged = false;
+      let cartStateChanged = false;
+
       mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'data-total-price') {
-          const newTotalPrice = parseInt(cartToastElement.dataset.totalPrice || '0');
-          setCartTotalPrice(newTotalPrice / 100);
+        if (mutation.type === 'attributes') {
+          if (mutation.attributeName === 'data-total-price') {
+            totalPriceChanged = true;
+          } else if (mutation.attributeName === 'data-cart-state') {
+            cartStateChanged = true;
+          }
         }
       });
+
+      if (totalPriceChanged) {
+        const newTotalPrice = parseInt(cartToastElement.dataset.totalPrice || '0');
+        setCartTotalPrice(newTotalPrice / 100);
+      }
+
+      if (cartStateChanged && cartToastElement.dataset.cartState) {
+        try {
+          const newCartState = JSON.parse(cartToastElement.dataset.cartState) as CartState;
+          setCartState(newCartState);
+        } catch (e) {
+          console.error('Error parsing cart state:', e);
+        }
+      }
     });
 
     // Start observing
@@ -155,6 +228,10 @@ export function CartToast({
     // Clean up observer when component unmounts
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    console.log('Updated Cart State', cartState);
+  }, [cartState]);
 
   const handleBoostHeaderClick = () => {
     setOpened(!opened);
@@ -274,6 +351,35 @@ export function CartToast({
             </span>
           </p>
           <ProgressBar maxPrice={maxPriceBoost} cartTotalPrice={cartTotalPrice} />
+        </div>
+        <div className={`cart-toast__content`}>
+          {cartState.item_count ? (
+            <>
+              <div className={`cart-toast__items-list-wrapper`}>
+                <ul className={`cart-toast__items-list`}>
+                  {cartState.items?.map((item, index) => {
+                    return (
+                      <li key={index} className={`cart-toast__item`}>
+                        <div className={`cart-toast__item-image-wrapper`}>
+                          <img src={item.featured_image?.url} className={`cart-toast__item-image`} />
+                        </div>
+                        <div className={`cart-toast__item-details`}>
+                          <a href={item.url}>{item.title}</a>
+                          <p>{item.variant_title}</p>
+                        </div>
+                        <div className={`cart-toast__item-quantity`}>
+                          <p>{item.quantity}</p>
+                          <p>{item.price / 100}</p>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </>
+          ) : (
+            'No items in cart'
+          )}
         </div>
       </div>
     </>

@@ -1,5 +1,11 @@
 {{ 'cart-toast.css' | asset_url | stylesheet_tag }}
 
-<div id="cart-toast" data-total-price="{{ cart.total_price }}" data-currency="{{ cart.total_price | money }}" data-active="false"></div>
+<div
+  id="cart-toast"
+  data-total-price="{{ cart.total_price }}"
+  data-currency="{{ cart.total_price | money }}"
+  data-cart-state="{{ cart | json | escape}}"
+  data-active="false"
+></div>
 
 <script src="{{ 'vite-cart-toast.js' | asset_url }}" defer></script>
