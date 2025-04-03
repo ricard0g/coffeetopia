@@ -144,12 +144,8 @@ if (!customElements.get('product-form')) {
           const cartTotalPrice = cartJson.total_price;
           console.log('Cart Quantity', cartTotalPrice);
 
-          console.log('Before', this.cartToast.dataset.totalPrice);
           this.cartToast.dataset.totalPrice = cartTotalPrice;
           this.cartToast.dataset.cartState = JSON.stringify(cartJson);
-          console.log('After', this.cartToast.dataset.totalPrice);
-
-          console.log('After', this.cartToast.dataset.cartState);
         } catch (e) {
           console.error('Error fetching cart data:', e);
         }

@@ -139,9 +139,9 @@
 }
 
 .cart-toat__reward-tier-icon-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .cart-toast__reward-tier-icon {
@@ -188,20 +188,51 @@
 
 .cart-toast__item {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-around;
+  align-items: start;
   width: 100%;
   height: 100%;
 }
 
 .cart-toast__item-image-wrapper {
-  width: 20%;
+  width: 15%;
 }
 
 .cart-toast__item-image {
   max-width: 100%;
+  height: auto;
+  border-radius: 20px;
 }
 
 .cart-toast__item-details {
-  width: 70%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: start;
+  align-items: start;
+  width: 50%;
+}
+
+.cart-toast__item-details a {
+  font-weight: 600;
+  text-decoration: none;
+  color: #2a1e13f7;
+}
+
+.cart-toast__item-details a:hover {
+  text-decoration: underline;
+}
+
+.cart-toast__item-details p,
+.cart-toast__item-quantity p {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #635140f7;
+}
+
+.cart-toast__item-quantity {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
 }

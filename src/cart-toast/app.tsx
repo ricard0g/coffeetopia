@@ -1,5 +1,13 @@
 import { useEffect, useState, useCallback } from 'preact/hooks';
 
+const formatPrice = (priceInCents: number, currency = 'EUR') => {
+  const euros = priceInCents / 100;
+  return new Intl.NumberFormat('es-ES', {
+    style: 'currency',
+    currency: currency,
+  }).format(euros);
+};
+
 const RewardTier = ({
   tierLevel,
   maxPrice,
@@ -14,7 +22,7 @@ const RewardTier = ({
       <div className={`cart-toast__reward-tier-icon-wrapper`}>
         <div
           className={`cart-toast__reward-tier-icon ${
-            cartTotalPrice > maxPrice ? 'cart-toast__reward-tier-icon-active' : ''
+            cartTotalPrice >= maxPrice ? 'cart-toast__reward-tier-icon-active' : ''
           }`}
         >
           <svg
@@ -160,7 +168,7 @@ interface CartItem {
   selling_plan_allocation?: any;
 }
 
-interface CartState {
+export interface CartState {
   token?: string;
   note?: string;
   attributes?: Record<string, string>;
@@ -170,6 +178,117 @@ interface CartState {
   total_weight?: number;
   item_count?: number;
   items?: Array<CartItem>;
+}
+
+function LineItem({
+  index,
+  item,
+  setCartTotalPrice,
+}: {
+  index: number;
+  item: CartItem;
+  setCartTotalPrice: (price: number) => void;
+}) {
+  const [quantity, setQuantity] = useState(item.quantity ?? 0);
+  const [lineItemPrice, setLineItemPrice] = useState(item.final_line_price ?? 0);
+
+  useEffect(() => {
+    console.log('Line Item Count', item.quantity);
+  });
+
+  return (
+    <li key={index} className={`cart-toast__item`}>
+      <div className={`cart-toast__item-image-wrapper`}>
+        <img
+          alt={String(item.featured_image?.alt)}
+          src={String(item.featured_image?.url)}
+          className={`cart-toast__item-image`}
+        />
+      </div>
+      <div className={`cart-toast__item-details`}>
+        <a href={item.url}>{item.title}</a>
+        <p>Coffee Product From: Ground</p>
+        <p>Flavor: Coffee</p>
+      </div>
+      <div className={`cart-toast__item-quantity`}>
+        <QuantityInput
+          quantity={quantity}
+          setQuantity={setQuantity}
+          setCartTotalPrice={setCartTotalPrice}
+          item={item}
+          lineItemPrice={lineItemPrice}
+          setLineItemPrice={setLineItemPrice}
+        />
+      </div>
+    </li>
+  );
+}
+
+function QuantityInput({
+  item,
+  setCartTotalPrice,
+  quantity,
+  setQuantity,
+  lineItemPrice,
+  setLineItemPrice,
+}: {
+  item: CartItem;
+  setCartTotalPrice: (price: number) => void;
+  quantity?: number;
+  setQuantity: (quantity: number) => void;
+  lineItemPrice: number;
+  setLineItemPrice: (price: number) => void;
+}) {
+  useEffect(() => {
+    setQuantity(item.quantity ?? 0);
+    setLineItemPrice(item.final_line_price ?? 0);
+  }, [item.key]);
+
+  useEffect(() => {
+    const formData = new FormData();
+    formData.append(`updates[${item.key}]`, String(quantity));
+
+    const updateCart = async () => {
+      try {
+        const response = await fetch('/cart/update.js', {
+          method: 'POST',
+          body: formData,
+        });
+        const data = await response.json();
+        console.log('Data Response', data);
+        setCartTotalPrice(data.total_price / 100);
+        setLineItemPrice(data.items.find((i: CartItem) => i.key === item.key)?.final_line_price ?? 0);
+      } catch (error) {
+        console.error('Error updating cart:', error);
+      }
+    };
+
+    console.log('Quantity', quantity);
+    updateCart();
+  }, [quantity, item.key]);
+
+  const handleChange = (e: Event) => {
+    const newQuantity = parseInt((e.target as HTMLSelectElement).value);
+    setQuantity(newQuantity);
+  };
+
+  return (
+    <div>
+      <div className={`cart-toast__item-quantity-wrapper`}>
+        <form action="cart/update.js" method="post" className={`cart-toast__item-quantity-form`}>
+          <select value={quantity} name="quantity" id="quantity-input" onChange={handleChange}>
+            <option value="0">Remove</option>
+            {Array.from({ length: 10 }, (_, i) => (
+              <option key={i} value={i + 1}>
+                {i + 1}
+              </option>
+            ))}
+          </select>
+        </form>
+      </div>
+      <p>{formatPrice(lineItemPrice)}</p>
+    </div>
+  );
 }
 
 export function CartToast({
@@ -227,7 +346,7 @@ export function CartToast({
 
     // Clean up observer when component unmounts
     return () => observer.disconnect();
-  }, []);
+  }, [cartTotalPrice]);
 
   useEffect(() => {
     console.log('Updated Cart State', cartState);
@@ -265,8 +384,8 @@ export function CartToast({
         class="cart-toast__backdrop"
         style={opened ? 'display: block' : 'display: none'}
       ></div>
-      <div onClick={handleBoostHeaderClick} className={`cart-toast__wrapper ${opened ? 'cart-toast__open' : ''}`}>
-        <div className="cart-toast__header">
+      <div className={`cart-toast__wrapper ${opened ? 'cart-toast__open' : ''}`}>
+        <div onClick={handleBoostHeaderClick} className="cart-toast__header">
           <p className={`cart-toast__header-text`}>
             <span className={`cart-toast__total-price-text ${opened ? 'cart-toast__total-price-text-centered' : ''}`}>
               {checkBoostText(cartTotalPrice)}
@@ -358,21 +477,7 @@ export function CartToast({
               <div className={`cart-toast__items-list-wrapper`}>
                 <ul className={`cart-toast__items-list`}>
                   {cartState.items?.map((item, index) => {
-                    return (
-                      <li key={index} className={`cart-toast__item`}>
-                        <div className={`cart-toast__item-image-wrapper`}>
-                          <img src={item.featured_image?.url} className={`cart-toast__item-image`} />
-                        </div>
-                        <div className={`cart-toast__item-details`}>
-                          <a href={item.url}>{item.title}</a>
-                          <p>{item.variant_title}</p>
-                        </div>
-                        <div className={`cart-toast__item-quantity`}>
-                          <p>{item.quantity}</p>
-                          <p>{item.price / 100}</p>
-                        </div>
-                      </li>
-                    );
+                    return <LineItem key={index} index={index} item={item} setCartTotalPrice={setCartTotalPrice} />;
                   })}
                 </ul>
               </div>
