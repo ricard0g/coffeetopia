@@ -1,6 +1,6 @@
 import { render } from 'preact';
-import { CartToast } from './app.tsx';
-import { CartState } from './app.tsx';
+import { CartToast } from './CartToast.tsx';
+import { CartState } from './types/cart.ts';
 
 const cartToast: HTMLElement | null = document.getElementById('cart-toast');
 const cartTotalPrice: number | undefined = parseInt(cartToast?.dataset.totalPrice || '0', 10);
