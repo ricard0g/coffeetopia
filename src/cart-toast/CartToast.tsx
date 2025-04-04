@@ -32,6 +32,11 @@ export const CartToast: FC<CartToastProps> = ({
     return initialLineItems;
   });
 
+  // Calculate total items from lineItems
+  const getTotalItems = useCallback(() => {
+    return Object.values(lineItems).reduce((total, item) => total + item.quantity, 0);
+  }, [lineItems]);
+
   // Add update cart function
   const updateCart = async (itemKey: string, quantity: number) => {
     const formData = new FormData();
@@ -109,7 +114,7 @@ export const CartToast: FC<CartToastProps> = ({
 
     // Clean up observer when component unmounts
     return () => observer.disconnect();
-  }, [cartTotalPrice]);
+  }, [cartTotalPrice, cartState]);
 
   const updateLineItems = () => {
     const updatedLineItems: LineItems = {};
@@ -125,7 +130,7 @@ export const CartToast: FC<CartToastProps> = ({
   };
 
   useEffect(() => {
-    console.log('Updated Cart State', cartState);
+    console.log('Updated Cart State Use Effect bro', cartState);
     updateLineItems();
   }, [cartState]);
 
@@ -170,7 +175,10 @@ export const CartToast: FC<CartToastProps> = ({
             <span className={`cart-toast__header-icons`}>
               {!opened ? (
                 <>
-                  <span>
+                  <span className={`cart-toast__cart-icon`}>
+                    <span className="cart-toast__cart-count-bubble">
+                      {getTotalItems()}
+                    </span>
                     <svg
                       width="20px"
                       height="20px"

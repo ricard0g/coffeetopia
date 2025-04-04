@@ -236,3 +236,26 @@
   align-items: center;
   width: 20%;
 }
+
+.cart-toast__cart-count-bubble {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  min-width: 15px;
+  height: 15px;
+  background-color: #de9151;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 11px;
+  font-weight: bold;
+  color: white;
+  padding: 0 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cart-toast__cart-icon {
+  position: relative;
+  display: inline-block;
+}
