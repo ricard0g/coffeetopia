@@ -10,6 +10,36 @@ class CartNotification extends HTMLElement {
     this.querySelectorAll('button[type="button"]').forEach((closeButton) =>
       closeButton.addEventListener('click', this.close.bind(this))
     );
+    
+    // Add event listener to the View Cart button
+    const cartToast = document.getElementById('cart-toast');
+    const cartNotificationButton = document.getElementById('cart-notification-button');
+    if (cartNotificationButton && cartToast) {
+      cartNotificationButton.addEventListener('click', this.handleCartButtonClick.bind(this));
+    }
+    
+    // Add event listener to the checkout form
+    const cartNotificationForm = document.getElementById('cart-notification-form');
+    if (cartNotificationForm) {
+      cartNotificationForm.addEventListener('submit', (event) => {
+        // Allow normal form submission (redirects to checkout)
+        this.close();
+      });
+    }
+  }
+
+  // Handle click on the View Cart button
+  handleCartButtonClick(event) {
+    event.preventDefault();
+    
+    // Close the notification
+    this.close();
+    
+    // Open the cart toast
+    const cartToast = document.getElementById('cart-toast');
+    if (cartToast) {
+      cartToast.setAttribute('data-active', 'true');
+    }
   }
 
   open() {

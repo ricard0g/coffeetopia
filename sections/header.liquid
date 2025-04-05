@@ -269,7 +269,7 @@
             <span class="svg-wrapper">{{'icon-cart.svg' | inline_asset_content }}</span>
           {% endif %}
         <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
-        {%- if cart != empty -%}
+        {%- if cart != empty and settings.cart_type != 'boost-cart' -%}
           <div class="cart-count-bubble">
             {%- if cart.item_count < 100 -%}
               <span id="CartCountBubbleText" aria-hidden="true">{{ cart.item_count }}</span>
