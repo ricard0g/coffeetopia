@@ -76,13 +76,14 @@ export const CartToast: FC<CartToastProps> = ({
   useEffect(() => {
     console.log('Cart Item Count From Preact', cartTotalPrice);
 
-    // Set up observer to watch for changes to data-item-count attribute
+    // Set up observer to watch for changes to data attributes
     const cartToastElement = document.getElementById('cart-toast');
     if (!cartToastElement) return;
 
     const observer = new MutationObserver((mutations) => {
       let totalPriceChanged = false;
       let cartStateChanged = false;
+      let activeStateChanged = false;
 
       mutations.forEach((mutation) => {
         if (mutation.type === 'attributes') {
@@ -90,6 +91,8 @@ export const CartToast: FC<CartToastProps> = ({
             totalPriceChanged = true;
           } else if (mutation.attributeName === 'data-cart-state') {
             cartStateChanged = true;
+          } else if (mutation.attributeName === 'data-active') {
+            activeStateChanged = true;
           }
         }
       });
@@ -107,6 +110,10 @@ export const CartToast: FC<CartToastProps> = ({
           console.error('Error parsing cart state:', e);
         }
       }
+
+      if (activeStateChanged && cartToastElement.dataset.active) {
+        setOpened(cartToastElement.dataset.active === 'true');
+      }
     });
 
     // Start observing
@@ -114,7 +121,7 @@ export const CartToast: FC<CartToastProps> = ({
 
     // Clean up observer when component unmounts
     return () => observer.disconnect();
-  }, [cartTotalPrice, cartState]);
+  }, []);
 
   const updateLineItems = () => {
     const updatedLineItems: LineItems = {};
@@ -136,10 +143,20 @@ export const CartToast: FC<CartToastProps> = ({
 
   const handleBoostHeaderClick = () => {
     setOpened(!opened);
+    // Sync the UI state with the data attribute
+    const cartToastElement = document.getElementById('cart-toast');
+    if (cartToastElement) {
+      cartToastElement.setAttribute('data-active', (!opened).toString());
+    }
   };
 
   const handleBackdropClick = () => {
     setOpened(false);
+    // Sync the UI state with the data attribute
+    const cartToastElement = document.getElementById('cart-toast');
+    if (cartToastElement) {
+      cartToastElement.setAttribute('data-active', 'false');
+    }
   };
 
   const checkBoostText = useCallback(

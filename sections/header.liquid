@@ -396,6 +396,22 @@
   }
 
   customElements.define('sticky-header', StickyHeader);
+
+  // Cart toast functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const cartIconBubble = document.getElementById('cart-icon-bubble');
+    const cartToast = document.getElementById('cart-toast');
+
+    if (cartIconBubble && cartToast) {
+      cartIconBubble.addEventListener('click', (event) => {
+        event.preventDefault();
+        
+        // Toggle the data-active attribute on the cart toast
+        const isActive = cartToast.getAttribute('data-active') === 'true';
+        cartToast.setAttribute('data-active', (!isActive).toString());
+      });
+    }
+  });
 {% endjavascript %}
 
 <script type="application/ld+json">
