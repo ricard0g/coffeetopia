@@ -259,3 +259,19 @@
   position: relative;
   display: inline-block;
 }
+
+#quantity-input {
+  width: 50px;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid #656565;
+  color: #656565;
+  background-color: transparent;
+  padding: 5px;
+  font-size: 1.2rem;
+}
+
+#quantity-input:focus {
+  outline: none;
+  border-color: #de9151;
+}
