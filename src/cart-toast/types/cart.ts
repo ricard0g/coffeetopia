@@ -1,5 +1,5 @@
 export interface CartItem {
-  id?: string | number;
+  id?:  number;
   properties?: Record<string, string>;
   quantity?: number;
   variant_id?: string | number;
@@ -54,6 +54,7 @@ export interface CartState {
 export interface LineItemState {
   quantity: number;
   lineItemPrice: number;
+  lineItemDiscountedPrice: number;
 }
 
 export type LineItems = Record<string, LineItemState>;

@@ -22,10 +22,11 @@ export const CartToast: FC<CartToastProps> = ({
   const [lineItems, setLineItems] = useState<LineItems>(() => {
     const initialLineItems: LineItems = {};
     initialCartState.items?.forEach((item) => {
-      if (item.key) {
-        initialLineItems[item.key] = {
+      if (item.id) {
+        initialLineItems[item.id] = {
           quantity: item.quantity ?? 0,
-          lineItemPrice: item.final_line_price ?? 0,
+          lineItemPrice: item.original_price ?? 0,
+          lineItemDiscountedPrice: item.discounted_price ?? 0,
         };
       }
     });
@@ -38,9 +39,9 @@ export const CartToast: FC<CartToastProps> = ({
   }, [lineItems]);
 
   // Add update cart function
-  const updateCart = async (itemKey: string, quantity: number) => {
+  const updateCart = async (itemId: number, quantity: number) => {
     const formData = new FormData();
-    formData.append(`updates[${itemKey}]`, String(quantity));
+    formData.append(`updates[${itemId}]`, String(quantity));
 
     try {
       const response = await fetch('/cart/update.js', {
@@ -48,26 +49,31 @@ export const CartToast: FC<CartToastProps> = ({
         body: formData,
       });
       const data = await response.json();
+      console.log('Updated cart data UpdateCassrst:', data);
       setCartTotalPrice(data.total_price / 100);
 
       // Update line item state
-      const updatedItem = data.items.find((i: CartItem) => i.key === itemKey);
+      console.log('Item Key from UpdateCart', itemId);
+      const updatedItem = data.items.find((i: CartItem) => i.id === itemId);
+      console.log('Updated item:', updatedItem);
       if (updatedItem) {
         setLineItems((prev) => ({
           ...prev,
-          [itemKey]: {
+          [itemId]: {
             quantity: updatedItem.quantity ?? 0,
-            lineItemPrice: updatedItem.final_line_price ?? 0,
+            lineItemPrice: updatedItem.original_price ?? 0,
+            lineItemDiscountedPrice: updatedItem.discounted_price ?? 0,
           },
         }));
       } else {
         // If item is not found in the response, it means it was removed
         setLineItems((prev) => {
           const newState = { ...prev };
-          delete newState[itemKey];
+          delete newState[itemId];
           return newState;
         });
       }
+      console.log('Updated line items:', lineItems);
     } catch (error) {
       console.error('Error updating cart:', error);
     }
@@ -126,10 +132,11 @@ export const CartToast: FC<CartToastProps> = ({
   const updateLineItems = () => {
     const updatedLineItems: LineItems = {};
     cartState.items?.forEach((item) => {
-      if (item.key) {
-        updatedLineItems[item.key] = {
+      if (item.id) {
+        updatedLineItems[item.id] = {
           quantity: item.quantity ?? 0,
-          lineItemPrice: item.final_line_price ?? 0,
+          lineItemPrice: item.original_price ?? 0,
+          lineItemDiscountedPrice: item.discounted_price ?? 0,
         };
       }
     });
@@ -193,9 +200,7 @@ export const CartToast: FC<CartToastProps> = ({
               {!opened ? (
                 <>
                   <span className={`cart-toast__cart-icon`}>
-                    <span className="cart-toast__cart-count-bubble">
-                      {getTotalItems()}
-                    </span>
+                    <span className="cart-toast__cart-count-bubble">{getTotalItems()}</span>
                     <svg
                       width="20px"
                       height="20px"
@@ -279,8 +284,8 @@ export const CartToast: FC<CartToastProps> = ({
               <div className={`cart-toast__items-list-wrapper`}>
                 <ul className={`cart-toast__items-list`}>
                   {cartState.items?.map((item, index) => {
-                    if (!item.key) return null;
-                    const lineItem = lineItems[item.key];
+                    if (!item.id) return null;
+                    const lineItem = lineItems[item.id];
                     // Only render items with quantity > 0
                     if (!lineItem || lineItem.quantity <= 0) return null;
                     return (
@@ -290,6 +295,7 @@ export const CartToast: FC<CartToastProps> = ({
                         item={item}
                         quantity={lineItem.quantity}
                         lineItemPrice={lineItem.lineItemPrice}
+                        lineItemDiscountedPrice={lineItem.lineItemDiscountedPrice}
                         updateCart={updateCart}
                       />
                     );
