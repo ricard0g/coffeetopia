@@ -4,6 +4,7 @@ import { LineItem, ProgressBar } from './components';
 
 interface CartToastProps {
   cartTotalPrice: number;
+  cartOriginalTotalPrice: number;
   cartCurrency: string;
   cartState: CartState;
 }
@@ -12,10 +13,11 @@ export const CartToast: FC<CartToastProps> = ({
   cartTotalPrice: initialCartTotalPrice,
   cartCurrency,
   cartState: initialCartState,
+  cartOriginalTotalPrice: initialCartOriginalTotalPrice,
 }) => {
   const [cartState, setCartState] = useState<CartState>(initialCartState);
   const [cartTotalPrice, setCartTotalPrice] = useState(initialCartTotalPrice / 100);
-  const [cartOriginalTotalPrice, setCartOriginalTotalPrice] = useState<number>(0);
+  const [cartOriginalTotalPrice, setCartOriginalTotalPrice] = useState<number>(initialCartOriginalTotalPrice / 100);
   const [opened, setOpened] = useState(false);
   const maxPriceBoost: number = 72;
 

@@ -8,6 +8,9 @@ interface ProgressBarProps {
 }
 
 export const ProgressBar: FC<ProgressBarProps> = ({ cartTotalPrice, maxPrice, cartOriginalTotalPrice }) => {
+  console.log(`cartTotalPrice: ${cartTotalPrice}`);
+  console.log(`cartOriginalTotalPrice: ${cartOriginalTotalPrice}`);
+  console.log(`maxPrice: ${maxPrice}`);
   const progress = useCallback(() => Math.max(0, Math.min(100, (cartOriginalTotalPrice / maxPrice) * 100)), [cartTotalPrice]);
   const rewardTiers: { tierLevel: string; maxPrice: number }[] = [
     {
