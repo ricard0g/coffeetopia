@@ -3,16 +3,17 @@ import { FC } from 'preact/compat';
 interface RewardTierProps {
   tierLevel: string;
   maxPrice: number;
-  cartTotalPrice: number;
+  cartTotalPrice?: number;
+  cartOriginalTotalPrice: number;
 }
 
-export const RewardTier: FC<RewardTierProps> = ({ tierLevel, maxPrice, cartTotalPrice }) => {
+export const RewardTier: FC<RewardTierProps> = ({ tierLevel, maxPrice, cartOriginalTotalPrice }) => {
   return (
     <div className={`cart-toast__reward-tier`}>
       <div className={`cart-toast__reward-tier-icon-wrapper`}>
         <div
           className={`cart-toast__reward-tier-icon ${
-            cartTotalPrice >= maxPrice ? 'cart-toast__reward-tier-icon-active' : ''
+            cartOriginalTotalPrice >= maxPrice ? 'cart-toast__reward-tier-icon-active' : ''
           }`}
         >
           <svg
@@ -35,7 +36,7 @@ export const RewardTier: FC<RewardTierProps> = ({ tierLevel, maxPrice, cartTotal
           </svg>
         </div>
         <span className={`cart-toast__reward-tier-text`}>
-          {cartTotalPrice < maxPrice ? (
+          {cartOriginalTotalPrice < maxPrice ? (
             tierLevel
           ) : (
             <>

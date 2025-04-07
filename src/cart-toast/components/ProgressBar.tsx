@@ -3,11 +3,12 @@ import { RewardTier } from './RewardTier';
 
 interface ProgressBarProps {
   cartTotalPrice: number;
+  cartOriginalTotalPrice: number;
   maxPrice: number;
 }
 
-export const ProgressBar: FC<ProgressBarProps> = ({ cartTotalPrice, maxPrice }) => {
-  const progress = useCallback(() => Math.max(0, Math.min(100, (cartTotalPrice / maxPrice) * 100)), [cartTotalPrice]);
+export const ProgressBar: FC<ProgressBarProps> = ({ cartTotalPrice, maxPrice, cartOriginalTotalPrice }) => {
+  const progress = useCallback(() => Math.max(0, Math.min(100, (cartOriginalTotalPrice / maxPrice) * 100)), [cartTotalPrice]);
   const rewardTiers: { tierLevel: string; maxPrice: number }[] = [
     {
       tierLevel: '5% off!',
@@ -15,11 +16,11 @@ export const ProgressBar: FC<ProgressBarProps> = ({ cartTotalPrice, maxPrice }) 
     },
     {
       tierLevel: '10% off!',
-      maxPrice: 36,
+      maxPrice: 38,
     },
     {
       tierLevel: '15% off!',
-      maxPrice: 54,
+      maxPrice: 56,
     },
     {
       tierLevel: '20% off!',
@@ -44,7 +45,7 @@ export const ProgressBar: FC<ProgressBarProps> = ({ cartTotalPrice, maxPrice }) 
                   key={index}
                   tierLevel={tier.tierLevel}
                   maxPrice={tier.maxPrice}
-                  cartTotalPrice={cartTotalPrice}
+                  cartOriginalTotalPrice={cartOriginalTotalPrice}
                 />
               </>
             );

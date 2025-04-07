@@ -19,6 +19,7 @@ export const QuantityInput: FC<QuantityInputProps> = ({ item, quantity, lineItem
       updateCart(item.id, newQuantity);
     }
   };
+  console.log("Line Item Total Price", lineItemPrice)
 
   return (
     <div>

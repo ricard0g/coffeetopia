@@ -15,6 +15,7 @@ export const CartToast: FC<CartToastProps> = ({
 }) => {
   const [cartState, setCartState] = useState<CartState>(initialCartState);
   const [cartTotalPrice, setCartTotalPrice] = useState(initialCartTotalPrice / 100);
+  const [cartOriginalTotalPrice, setCartOriginalTotalPrice] = useState<number>(0);
   const [opened, setOpened] = useState(false);
   const maxPriceBoost: number = 72;
 
@@ -25,8 +26,8 @@ export const CartToast: FC<CartToastProps> = ({
       if (item.id) {
         initialLineItems[item.id] = {
           quantity: item.quantity ?? 0,
-          lineItemPrice: item.original_price ?? 0,
-          lineItemDiscountedPrice: item.discounted_price ?? 0,
+          lineItemPrice: item.final_line_price ?? 0,
+          lineItemDiscountedPrice: item.line_price ?? 0,
         };
       }
     });
@@ -51,6 +52,7 @@ export const CartToast: FC<CartToastProps> = ({
       const data = await response.json();
       console.log('Updated cart data UpdateCassrst:', data);
       setCartTotalPrice(data.total_price / 100);
+      setCartOriginalTotalPrice(data.original_total_price / 100);
 
       // Update line item state
       console.log('Item Key from UpdateCart', itemId);
@@ -61,8 +63,8 @@ export const CartToast: FC<CartToastProps> = ({
           ...prev,
           [itemId]: {
             quantity: updatedItem.quantity ?? 0,
-            lineItemPrice: updatedItem.original_price ?? 0,
-            lineItemDiscountedPrice: updatedItem.discounted_price ?? 0,
+            lineItemPrice: updatedItem.final_line_price ?? 0,
+            lineItemDiscountedPrice: updatedItem.line_price ?? 0,
           },
         }));
       } else {
@@ -105,7 +107,9 @@ export const CartToast: FC<CartToastProps> = ({
 
       if (totalPriceChanged) {
         const newTotalPrice = parseInt(cartToastElement.dataset.totalPrice || '0');
+        const newOriginalPrice = parseInt(cartToastElement.dataset.originalPrice || '0');
         setCartTotalPrice(newTotalPrice / 100);
+        setCartOriginalTotalPrice(newOriginalPrice / 100);
       }
 
       if (cartStateChanged && cartToastElement.dataset.cartState) {
@@ -135,8 +139,8 @@ export const CartToast: FC<CartToastProps> = ({
       if (item.id) {
         updatedLineItems[item.id] = {
           quantity: item.quantity ?? 0,
-          lineItemPrice: item.original_price ?? 0,
-          lineItemDiscountedPrice: item.discounted_price ?? 0,
+          lineItemPrice: item.final_line_price ?? 0,
+          lineItemDiscountedPrice: item.line_price ?? 0,
         };
       }
     });
@@ -276,7 +280,11 @@ export const CartToast: FC<CartToastProps> = ({
               )}
             </span>
           </p>
-          <ProgressBar maxPrice={maxPriceBoost} cartTotalPrice={cartTotalPrice} />
+          <ProgressBar
+            maxPrice={maxPriceBoost}
+            cartTotalPrice={cartTotalPrice}
+            cartOriginalTotalPrice={cartOriginalTotalPrice}
+          />
         </div>
         <div className={`cart-toast__content`}>
           {cartState.item_count ? (

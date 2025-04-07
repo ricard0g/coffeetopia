@@ -3,6 +3,7 @@
 <div
   id="cart-toast"
   data-total-price="{{ cart.total_price }}"
+  data-original-price="{{ cart.original_total_price }}"
   data-currency="{{ cart.total_price | money }}"
   data-cart-state="{{ cart | json | escape}}"
   data-active="false"
