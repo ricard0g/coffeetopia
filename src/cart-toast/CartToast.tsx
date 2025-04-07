@@ -171,11 +171,11 @@ export const CartToast: FC<CartToastProps> = ({
       if (cartTotalPrice < 18) {
         return `🎁 Spend ${cartCurrency}${18 - cartTotalPrice},  get 5% off!`;
       } else if (cartTotalPrice >= 20 && cartTotalPrice < 38) {
-        return `🎁 Spend ${cartCurrency}${36 - cartTotalPrice},  get 10% off!`;
+        return `🎁 Spend ${cartCurrency}${38 - cartTotalPrice},  get 10% off!`;
       } else if (cartTotalPrice >= 34 && cartTotalPrice < 56) {
-        return `🎁 Spend ${cartCurrency}${54 - cartTotalPrice},  get 15% off!`;
+        return `🎁 Spend ${cartCurrency}${56 - cartTotalPrice},  get 15% off!`;
       } else if (cartTotalPrice >= 52 && cartTotalPrice < 72) {
-        return `🎁 Spend ${cartCurrency}${70 - cartTotalPrice},  get 20% off!`;
+        return `🎁 Spend ${cartCurrency}${72 - cartTotalPrice},  get 20% off!`;
       } else {
         return `🎉 You have unlocked the 20% off!`;
       }
@@ -306,6 +306,9 @@ export const CartToast: FC<CartToastProps> = ({
           ) : (
             'No items in cart'
           )}
+        </div>
+        <div className={`cart-toast__footer`}>
+          <p>{cartState.total_price}</p>
         </div>
       </div>
     </>
