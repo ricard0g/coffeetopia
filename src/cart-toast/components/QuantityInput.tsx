@@ -10,7 +10,13 @@ interface QuantityInputProps {
   updateCart: (itemId: number, quantity: number) => Promise<void>;
 }
 
-export const QuantityInput: FC<QuantityInputProps> = ({ item, quantity, lineItemPrice, lineItemDiscountedPrice, updateCart }) => {
+export const QuantityInput: FC<QuantityInputProps> = ({
+  item,
+  quantity,
+  lineItemPrice,
+  lineItemDiscountedPrice,
+  updateCart,
+}) => {
   const handleChange = (e: Event) => {
     const newQuantity = parseInt((e.target as HTMLSelectElement).value);
     if (item.id) {
@@ -19,7 +25,7 @@ export const QuantityInput: FC<QuantityInputProps> = ({ item, quantity, lineItem
       updateCart(item.id, newQuantity);
     }
   };
-  console.log("Line Item Total Price", lineItemPrice)
+  console.log('Line Item Total Price', lineItemPrice);
 
   return (
     <div>
@@ -27,7 +33,7 @@ export const QuantityInput: FC<QuantityInputProps> = ({ item, quantity, lineItem
         <form action="cart/update.js" method="post" className={`cart-toast__item-quantity-form`}>
           <select value={quantity} name="quantity" id="quantity-input" onChange={handleChange}>
             <option value="0">Remove</option>
-            {Array.from({ length: 20 }, (_, i) => (
+            {Array.from({ length: 15 }, (_, i) => (
               <option key={i} value={i + 1}>
                 {i + 1}
               </option>

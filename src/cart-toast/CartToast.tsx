@@ -112,6 +112,8 @@ export const CartToast: FC<CartToastProps> = ({
         const newOriginalPrice = parseInt(cartToastElement.dataset.originalPrice || '0');
         setCartTotalPrice(newTotalPrice / 100);
         setCartOriginalTotalPrice(newOriginalPrice / 100);
+        console.log('New Original Total Price:', newOriginalPrice);
+        console.log('New Total Price:', newTotalPrice);
       }
 
       if (cartStateChanged && cartToastElement.dataset.cartState) {
@@ -173,15 +175,15 @@ export const CartToast: FC<CartToastProps> = ({
   };
 
   const checkBoostText = useCallback(
-    (cartTotalPrice: number) => {
-      if (cartTotalPrice < 18) {
-        return `🎁 Spend ${cartCurrency}${18 - cartTotalPrice},  get 5% off!`;
-      } else if (cartTotalPrice >= 20 && cartTotalPrice < 38) {
-        return `🎁 Spend ${cartCurrency}${38 - cartTotalPrice},  get 10% off!`;
-      } else if (cartTotalPrice >= 34 && cartTotalPrice < 56) {
-        return `🎁 Spend ${cartCurrency}${56 - cartTotalPrice},  get 15% off!`;
-      } else if (cartTotalPrice >= 52 && cartTotalPrice < 72) {
-        return `🎁 Spend ${cartCurrency}${72 - cartTotalPrice},  get 20% off!`;
+    (cartOriginalTotalPrice: number) => {
+      if (cartOriginalTotalPrice < 18) {
+        return `🎁 Spend ${cartCurrency}${(18 - cartOriginalTotalPrice).toFixed(2)},  get 5% off!`;
+      } else if (cartOriginalTotalPrice >= 20 && cartOriginalTotalPrice < 38) {
+        return `🎁 Spend ${cartCurrency}${(38 - cartOriginalTotalPrice).toFixed(2)},  get 10% off!`;
+      } else if (cartOriginalTotalPrice >= 34 && cartOriginalTotalPrice < 54) {
+        return `🎁 Spend ${cartCurrency}${(56 - cartOriginalTotalPrice).toFixed(2)},  get 15% off!`;
+      } else if (cartOriginalTotalPrice >= 52 && cartOriginalTotalPrice < 71.73) {
+        return `🎁 Spend ${cartCurrency}${(71.73 - cartOriginalTotalPrice).toFixed(2)},  get 20% off!`;
       } else {
         return `🎉 You have unlocked the 20% off!`;
       }
@@ -200,7 +202,7 @@ export const CartToast: FC<CartToastProps> = ({
         <div onClick={handleBoostHeaderClick} className="cart-toast__header">
           <p className={`cart-toast__header-text`}>
             <span className={`cart-toast__total-price-text ${opened ? 'cart-toast__total-price-text-centered' : ''}`}>
-              {checkBoostText(cartTotalPrice)}
+              {checkBoostText(cartOriginalTotalPrice)}
             </span>
             <span className={`cart-toast__header-icons`}>
               {!opened ? (

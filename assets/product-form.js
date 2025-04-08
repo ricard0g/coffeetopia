@@ -140,11 +140,10 @@ if (!customElements.get('product-form')) {
           }
 
           const cartJson = await response.json();
-          console.log('Cart Now', cartJson);
           const cartTotalPrice = cartJson.total_price;
-          console.log('Cart Quantity', cartTotalPrice);
 
           this.cartToast.dataset.totalPrice = cartTotalPrice;
+          this.cartToast.dataset.originalPrice = cartJson.original_total_price;
           this.cartToast.dataset.cartState = JSON.stringify(cartJson);
         } catch (e) {
           console.error('Error fetching cart data:', e);

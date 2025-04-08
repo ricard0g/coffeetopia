@@ -250,11 +250,9 @@ class CartItems extends HTMLElement {
       const cartTotalPrice = cartJson.total_price;
       console.log('Cart Toal Price', cartTotalPrice);
 
-      console.log('Before', this.cartToast.dataset.totalPrice);
       this.cartToast.dataset.totalPrice = cartTotalPrice;
       this.cartToast.dataset.cartState = JSON.stringify(cartJson);
-      console.log('After', this.cartToast.dataset.totalPrice);
-      console.log('After', this.cartToast.dataset.cartState);
+      this.cartToast.dataset.originalPrice = cartJson.original_total_price;
     } catch (e) {
       console.error('Error fetching cart data:', e);
     }

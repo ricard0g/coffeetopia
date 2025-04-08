@@ -11,7 +11,11 @@ export const ProgressBar: FC<ProgressBarProps> = ({ cartTotalPrice, maxPrice, ca
   console.log(`cartTotalPrice: ${cartTotalPrice}`);
   console.log(`cartOriginalTotalPrice: ${cartOriginalTotalPrice}`);
   console.log(`maxPrice: ${maxPrice}`);
-  const progress = useCallback(() => Math.max(0, Math.min(100, (cartOriginalTotalPrice / maxPrice) * 100)), [cartTotalPrice]);
+  const progress = useCallback(
+    () => Math.max(0, Math.min(100, (cartOriginalTotalPrice / maxPrice) * 100)),
+    [cartOriginalTotalPrice]
+  );
+  console.log(`Progress: ${progress()}`);
   const rewardTiers: { tierLevel: string; maxPrice: number }[] = [
     {
       tierLevel: '5% off!',
@@ -23,11 +27,11 @@ export const ProgressBar: FC<ProgressBarProps> = ({ cartTotalPrice, maxPrice, ca
     },
     {
       tierLevel: '15% off!',
-      maxPrice: 56,
+      maxPrice: 54,
     },
     {
       tierLevel: '20% off!',
-      maxPrice: 72,
+      maxPrice: 71.73,
     },
   ];
   return (
