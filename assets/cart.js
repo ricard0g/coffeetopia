@@ -246,9 +246,7 @@ class CartItems extends HTMLElement {
       }
 
       const cartJson = await response.json();
-      console.log('Cart Now', cartJson);
       const cartTotalPrice = cartJson.total_price;
-      console.log('Cart Toal Price', cartTotalPrice);
 
       this.cartToast.dataset.totalPrice = cartTotalPrice;
       this.cartToast.dataset.cartState = JSON.stringify(cartJson);

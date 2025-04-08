@@ -1,6 +1,7 @@
 import { FC, useEffect, useState, useCallback } from 'preact/compat';
 import { CartState, CartItem, LineItems } from './types/cart';
 import { LineItem, ProgressBar } from './components';
+import { BestSellers } from './components/BestSellers';
 
 interface CartToastProps {
   cartTotalPrice: number;
@@ -52,14 +53,18 @@ export const CartToast: FC<CartToastProps> = ({
         body: formData,
       });
       const data = await response.json();
-      console.log('Updated cart data UpdateCassrst:', data);
       setCartTotalPrice(data.total_price / 100);
       setCartOriginalTotalPrice(data.original_total_price / 100);
+      
+      // Update cartState with the latest data
+      setCartState({
+        ...cartState,
+        item_count: data.item_count,
+        items: data.items
+      });
 
       // Update line item state
-      console.log('Item Key from UpdateCart', itemId);
       const updatedItem = data.items.find((i: CartItem) => i.id === itemId);
-      console.log('Updated item:', updatedItem);
       if (updatedItem) {
         setLineItems((prev) => ({
           ...prev,
@@ -77,14 +82,12 @@ export const CartToast: FC<CartToastProps> = ({
           return newState;
         });
       }
-      console.log('Updated line items:', lineItems);
     } catch (error) {
       console.error('Error updating cart:', error);
     }
   };
 
   useEffect(() => {
-    console.log('Cart Item Count From Preact', cartTotalPrice);
 
     // Set up observer to watch for changes to data attributes
     const cartToastElement = document.getElementById('cart-toast');
@@ -112,8 +115,6 @@ export const CartToast: FC<CartToastProps> = ({
         const newOriginalPrice = parseInt(cartToastElement.dataset.originalPrice || '0');
         setCartTotalPrice(newTotalPrice / 100);
         setCartOriginalTotalPrice(newOriginalPrice / 100);
-        console.log('New Original Total Price:', newOriginalPrice);
-        console.log('New Total Price:', newTotalPrice);
       }
 
       if (cartStateChanged && cartToastElement.dataset.cartState) {
@@ -152,7 +153,6 @@ export const CartToast: FC<CartToastProps> = ({
   };
 
   useEffect(() => {
-    console.log('Updated Cart State Use Effect bro', cartState);
     updateLineItems();
   }, [cartState]);
 
@@ -316,7 +316,15 @@ export const CartToast: FC<CartToastProps> = ({
               </div>
             </>
           ) : (
-            'No items in cart'
+            <div className={`cart-toast__empty-cart-wrapper`}>
+              <div className={`cart-toast__empty-cart`}>
+                <p className={`cart-toast__empty-cart-text`}>Your Cart is Empty.</p>
+                <h4 className={`cart-toast__emtpy-cart-heading`}>Start With our Best Sellers</h4>
+              </div>
+              <div className={`cart-toast__best-selling-suggestions`}>
+                <BestSellers />
+              </div>
+            </div>
           )}
         </div>
         <div className={`cart-toast__footer`}>

@@ -20,12 +20,9 @@ export const QuantityInput: FC<QuantityInputProps> = ({
   const handleChange = (e: Event) => {
     const newQuantity = parseInt((e.target as HTMLSelectElement).value);
     if (item.id) {
-      console.log('Item key:', item.key);
-      console.log('Item Id', item.id);
       updateCart(item.id, newQuantity);
     }
   };
-  console.log('Line Item Total Price', lineItemPrice);
 
   return (
     <div>
