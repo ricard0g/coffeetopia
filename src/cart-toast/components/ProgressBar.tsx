@@ -2,12 +2,12 @@ import { FC, useCallback } from 'preact/compat';
 import { RewardTier } from './RewardTier';
 
 interface ProgressBarProps {
-  cartTotalPrice: number;
+  cartTotalPrice?: number;
   cartOriginalTotalPrice: number;
   maxPrice: number;
 }
 
-export const ProgressBar: FC<ProgressBarProps> = ({ cartTotalPrice, maxPrice, cartOriginalTotalPrice }) => {
+export const ProgressBar: FC<ProgressBarProps> = ({ maxPrice, cartOriginalTotalPrice }) => {
   const progress = useCallback(
     () => Math.max(0, Math.min(100, (cartOriginalTotalPrice / maxPrice) * 100)),
     [cartOriginalTotalPrice]

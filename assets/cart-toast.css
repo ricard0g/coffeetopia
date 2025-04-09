@@ -187,9 +187,9 @@
   list-style: none;
 }
 
-.cart-toast__content {
-  overflow: scroll;
-}
+/* .cart-toast__content {
+   overflow: scroll;
+} */
 
 .cart-toast__item {
   display: flex;
@@ -379,7 +379,11 @@
   }
 
   .cart-toast__open {
-    height: 100vh;
+    height: 100%;
+  }
+
+  .cart-toast__content {
+    overflow: scroll;
   }
 
   .cart-toast__empty-cart-wrapper {
