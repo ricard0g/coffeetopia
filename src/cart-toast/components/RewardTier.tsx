@@ -17,6 +17,7 @@ export const RewardTier: FC<RewardTierProps> = ({ tierLevel, maxPrice, cartOrigi
           }`}
         >
           <svg
+          className={`cart-toast__reward-tier-icon-svg`}
             width="20px"
             height="20px"
             viewBox="0 0 24 24"
