@@ -4,9 +4,11 @@ import { getBestSellers, getProductId } from '../utils/getBestSellers';
 
 export const BestSellers: FC = () => {
   const [bestSellers, setBestSellers] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchBestSellers = async () => {
+      setIsLoading(true);
       try {
         const productId = await getProductId(); // Replace with actual product ID
         const intent = 'related'; // Replace with actual intent
@@ -14,11 +16,26 @@ export const BestSellers: FC = () => {
         setBestSellers(bestSellersData);
       } catch (error) {
         console.error('Error fetching best sellers:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchBestSellers();
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className="cart-toast__best-sellers-loading">
+        {[1, 2, 3].map((placeholder) => (
+          <div key={placeholder} className="cart-toast__best-sellers-loading-item">
+            <div className="cart-toast__best-sellers-loading-image"></div>
+            <div className="cart-toast__best-sellers-loading-text"></div>
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <>

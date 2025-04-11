@@ -8,6 +8,7 @@ interface QuantityInputProps {
   lineItemPrice: number;
   lineItemDiscountedPrice: number;
   updateCart: (itemId: number, quantity: number) => Promise<void>;
+  isLoading?: boolean;
 }
 
 export const QuantityInput: FC<QuantityInputProps> = ({
@@ -16,6 +17,7 @@ export const QuantityInput: FC<QuantityInputProps> = ({
   lineItemPrice,
   lineItemDiscountedPrice,
   updateCart,
+  isLoading = false,
 }) => {
   const handleChange = (e: Event) => {
     const newQuantity = parseInt((e.target as HTMLSelectElement).value);
@@ -26,9 +28,15 @@ export const QuantityInput: FC<QuantityInputProps> = ({
 
   return (
     <div>
-      <div className={`cart-toast__item-quantity-wrapper`}>
+      <div className={`cart-toast__item-quantity-wrapper ${isLoading ? 'cart-toast__item-quantity-loading' : ''}`}>
         <form action="cart/update.js" method="post" className={`cart-toast__item-quantity-form`}>
-          <select value={quantity} name="quantity" id="quantity-input" onChange={handleChange}>
+          <select 
+            value={quantity} 
+            name="quantity" 
+            id="quantity-input" 
+            onChange={handleChange}
+            disabled={isLoading}
+          >
             <option value="0">Remove</option>
             {Array.from({ length: 15 }, (_, i) => (
               <option key={i} value={i + 1}>
@@ -36,6 +44,7 @@ export const QuantityInput: FC<QuantityInputProps> = ({
               </option>
             ))}
           </select>
+          {isLoading && <div className="cart-toast__quantity-loading-spinner"></div>}
         </form>
       </div>
       <p

@@ -22,6 +22,7 @@ export const CartToast: FC<CartToastProps> = ({
   const [cartOriginalTotalPrice, setCartOriginalTotalPrice] = useState<number>(initialCartOriginalTotalPrice / 100);
   const [opened, setOpened] = useState(false);
   const maxPriceBoost: number = 72;
+  const [loadingItemIds, setLoadingItemIds] = useState<number[]>([]);
 
   // Add state for line items
   const [lineItems, setLineItems] = useState<LineItems>(() => {
@@ -45,6 +46,7 @@ export const CartToast: FC<CartToastProps> = ({
 
   // Add update cart function
   const updateCart = async (itemId: number, quantity: number) => {
+    setLoadingItemIds(prev => [...prev, itemId]);
     const formData = new FormData();
     formData.append(`updates[${itemId}]`, String(quantity));
 
@@ -85,6 +87,8 @@ export const CartToast: FC<CartToastProps> = ({
       }
     } catch (error) {
       console.error('Error updating cart:', error);
+    } finally {
+      setLoadingItemIds(prev => prev.filter(id => id !== itemId));
     }
   };
 
@@ -309,6 +313,7 @@ export const CartToast: FC<CartToastProps> = ({
                         lineItemPrice={lineItem.lineItemPrice}
                         lineItemDiscountedPrice={lineItem.lineItemDiscountedPrice}
                         updateCart={updateCart}
+                        isLoading={loadingItemIds.includes(item.id)}
                       />
                     );
                   })}
