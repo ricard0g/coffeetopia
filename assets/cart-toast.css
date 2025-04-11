@@ -187,9 +187,11 @@
   list-style: none;
 }
 
-/* .cart-toast__content {
-   overflow: scroll;
-} */
+.cart-toast__content {
+  height: 73vh;
+  max-height: 73vh;
+  overflow: scroll;
+}
 
 .cart-toast__item {
   display: flex;
@@ -232,6 +234,20 @@
   margin: 0;
   font-size: 1.4rem;
   color: #635140f7;
+}
+
+.cart-toast__item-quantity p {
+  margin: 5px auto;
+  text-align: center;
+}
+
+.cart-toast__line-item-price-dashed {
+  text-decoration: line-through;
+}
+
+.cart-toast__discounted-price {
+  font-weight: 600;
+  color: #9c2626 !important;
 }
 
 .cart-toast__item-quantity {
@@ -333,9 +349,49 @@
   min-width: 150px;
 }
 
+.cart-toast__best-sellers-item a {
+  text-decoration: none;
+}
+
 .cart-toast__best-sellers-figure {
+  position: relative;
   width: 100%;
   margin: 0;
+}
+
+.cart-toast__best-sellers-icon-arrow {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -8px;
+  right: -8px;
+  width: 25px;
+  height: 25px;
+  background-color: #eadfcb;
+  border-radius: 50%;
+  border: 1px solid #2a1e131e;
+  box-shadow: 1px 3px 4px 2px rgba(0, 0, 0, 0.2);
+  opacity: 0.8;
+  transition: all 300ms ease;
+}
+
+.cart-toast__best-sellers-figure:hover .cart-toast__best-sellers-icon-arrow {
+  background-color: #de9151;
+  border: 1px solid #de9151;
+}
+
+.cart-toast__best-sellers-figure figcaption {
+  text-align: center;
+}
+
+.cart-toast__best-sellers-figure figcaption a {
+  text-decoration: none;
+  color: #2a1e13f7;
+}
+
+.cart-toast__best-sellers-figure:hover figcaption a {
+  text-decoration: underline;
 }
 
 .cart-toast__best-sellers-img-wrapper {
@@ -403,6 +459,10 @@
     height: 12px;
   }
 
+  .cart-toast__reward-tier {
+    transform: translateX(25%);
+  }
+
   .cart-toast__reward-tier-icon-svg {
     width: 15px;
     height: 15px;
@@ -417,11 +477,44 @@
     font-size: 1.2rem;
   }
 
+  .cart-toast__reward-tier-text-span {
+    font-size: 1.2rem;
+  }
+
   .cart-toast__content {
     overflow: scroll;
   }
 
   .cart-toast__empty-cart-wrapper {
-    width: 90%;
+    width: 85%;
+    margin: 8vh auto;
+  }
+
+  .cart-toast__empty-cart h4 {
+    font-size: 1.5rem;
+  }
+
+  .cart-toast__empty-cart p {
+    font-size: 1.3rem;
+  }
+
+  .cart-toast__best-selling-suggestions {
+    margin: 1vh 0;
+  }
+
+  .cart-toast__best-sellers-list {
+    row-gap: 3vh;
+  }
+
+  .cart-toast__best-sellers-item {
+    width: 35%;
+  }
+
+  .cart-toast__best-sellers-item {
+    min-width: 80px;
+  }
+
+  .cart-toast__best-sellers-figure figcaption {
+    font-size: 1.4rem;
   }
 }

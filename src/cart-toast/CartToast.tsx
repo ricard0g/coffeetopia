@@ -55,12 +55,12 @@ export const CartToast: FC<CartToastProps> = ({
       const data = await response.json();
       // setCartTotalPrice(data.total_price / 100);
       setCartOriginalTotalPrice(data.original_total_price / 100);
-      
+
       // Update cartState with the latest data
       setCartState({
         ...cartState,
         item_count: data.item_count,
-        items: data.items
+        items: data.items,
       });
 
       // Update line item state
@@ -88,7 +88,6 @@ export const CartToast: FC<CartToastProps> = ({
   };
 
   useEffect(() => {
-
     // Set up observer to watch for changes to data attributes
     const cartToastElement = document.getElementById('cart-toast');
     if (!cartToastElement) return;
@@ -328,7 +327,11 @@ export const CartToast: FC<CartToastProps> = ({
           )}
         </div>
         <div className={`cart-toast__footer`}>
-          <p>{cartState.total_price}</p>
+          <p>
+            <span>Subtotal:</span>
+            <span>{cartState.total_price}</span>
+          </p>
+          <a href="/checkout">Go To Checkout</a>
         </div>
       </div>
     </>

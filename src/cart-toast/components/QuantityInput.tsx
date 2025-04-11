@@ -38,8 +38,16 @@ export const QuantityInput: FC<QuantityInputProps> = ({
           </select>
         </form>
       </div>
-      <p>{formatPrice(lineItemPrice)}</p>
-      <p>{formatPrice(lineItemDiscountedPrice)}</p>
+      <p
+        className={`${
+          lineItemPrice === lineItemDiscountedPrice ? '' : 'cart-toast__line-item-price-dashed'
+        }`}
+      >
+        {formatPrice(lineItemPrice)}
+      </p>
+      <p className={`cart-toast__discounted-price`}>
+        {lineItemPrice === lineItemDiscountedPrice ? '' : formatPrice(lineItemDiscountedPrice)}
+      </p>
     </div>
   );
 };
