@@ -12,13 +12,13 @@ interface CartToastProps {
 }
 
 export const CartToast: FC<CartToastProps> = ({
-  // cartTotalPrice: initialCartTotalPrice,
+  cartTotalPrice: initialCartTotalPrice,
   cartCurrency,
   cartState: initialCartState,
   cartOriginalTotalPrice: initialCartOriginalTotalPrice,
 }) => {
   const [cartState, setCartState] = useState<CartState>(initialCartState);
-  // const [cartTotalPrice, setCartTotalPrice] = useState(initialCartTotalPrice / 100);
+  const [cartTotalPrice, setCartTotalPrice] = useState(initialCartTotalPrice);
   const [cartOriginalTotalPrice, setCartOriginalTotalPrice] = useState<number>(initialCartOriginalTotalPrice / 100);
   const [opened, setOpened] = useState(false);
   const maxPriceBoost: number = 72;
@@ -54,7 +54,7 @@ export const CartToast: FC<CartToastProps> = ({
         body: formData,
       });
       const data = await response.json();
-      // setCartTotalPrice(data.total_price / 100);
+      setCartTotalPrice(data.total_price);
       setCartOriginalTotalPrice(data.original_total_price / 100);
 
       // Update cartState with the latest data
@@ -111,9 +111,9 @@ export const CartToast: FC<CartToastProps> = ({
       });
 
       if (totalPriceChanged) {
-        // const newTotalPrice = parseInt(cartToastElement.dataset.totalPrice || '0');
+        const newTotalPrice = parseInt(cartToastElement.dataset.totalPrice || '0');
         const newOriginalPrice = parseInt(cartToastElement.dataset.originalPrice || '0');
-        // setCartTotalPrice(newTotalPrice / 100);
+        setCartTotalPrice(newTotalPrice);
         setCartOriginalTotalPrice(newOriginalPrice / 100);
       }
 
@@ -286,7 +286,7 @@ export const CartToast: FC<CartToastProps> = ({
           </p>
           <ProgressBar
             maxPrice={maxPriceBoost}
-            // cartTotalPrice={cartTotalPrice}
+            cartTotalPrice={cartTotalPrice}
             cartOriginalTotalPrice={cartOriginalTotalPrice}
           />
         </div>
@@ -330,9 +330,11 @@ export const CartToast: FC<CartToastProps> = ({
         <div className={`cart-toast__footer`}>
           <p className={`cart-toast__footer-text`}>
             <span>Subtotal:</span>
-            <span className={`cart-toast__footer-price`}>{formatPrice(cartState.total_price || 0)}</span>
+            <span className={`cart-toast__footer-price`}>{formatPrice(cartTotalPrice || 0)}</span>
           </p>
-          <a className={`cart-toast__checkout-button`} href="/checkout">Go To Checkout</a>
+          <a className={`cart-toast__checkout-button`} href="/checkout">
+            Go To Checkout
+          </a>
         </div>
       </div>
     </>

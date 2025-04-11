@@ -188,9 +188,32 @@
 }
 
 .cart-toast__content {
+  display: flex;
+  justify-content: center;
   height: 70vh;
   max-height: 70vh;
-  overflow: scroll;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #de9151 #eadfcb;  /* thumb and track color */
+}
+
+/* Scrollbar styling for cart-toast__content */
+.cart-toast__content::-webkit-scrollbar {
+  width: 8px;  /* width of the scrollbar */
+}
+
+.cart-toast__content::-webkit-scrollbar-track {
+  background: #eadfcb;  /* track color - matching your theme background */
+  border-radius: 10px;
+}
+
+.cart-toast__content::-webkit-scrollbar-thumb {
+  background: #8b603d;  /* thumb color - using your theme accent color */
+  border-radius: 10px;
+}
+
+.cart-toast__content::-webkit-scrollbar-thumb:hover {
+  background: #bb7937;  /* thumb color on hover - using darker shade */
 }
 
 .cart-toast__item {
@@ -304,7 +327,8 @@
   justify-content: center;
   align-items: center;
   width: 60%;
-  margin: 10vh auto;
+  /* margin: 10vh auto; */
+  margin-top: 10vh;
 }
 
 .cart-toast__empty-cart {
@@ -404,8 +428,11 @@
 }
 
 .cart-toast__footer {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  height: 100%;
   padding: 0 2vw;
 }
 
@@ -413,12 +440,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 1vh 0;
+  width: 100%;
+  margin: 0;
+  padding: 1vh 0;
+  border-top: 1px solid #63514076;
   color: #635140f7;
 }
 
 .cart-toast__footer-price {
   font-weight: 600;
+  font-size: 1.8rem;
 }
 
 .cart-toast__checkout-button {
@@ -426,7 +457,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 7vh;
+  height: 6vh;
   background-color: #de9151;
   color: white;
   border: none;
@@ -520,12 +551,13 @@
   }
 
   .cart-toast__content {
-    overflow: scroll;
+    overflow-y: scroll;
   }
 
   .cart-toast__empty-cart-wrapper {
     width: 85%;
-    margin: 8vh auto;
+    /* margin: 8vh auto; */
+    margin-top: 8vh;
   }
 
   .cart-toast__empty-cart h4 {
@@ -554,5 +586,9 @@
 
   .cart-toast__best-sellers-figure figcaption {
     font-size: 1.4rem;
+  }
+
+  .cart-toast__footer-price {
+    font-size: 1.6rem;
   }
 }
