@@ -2,6 +2,7 @@ import { FC, useEffect, useState, useCallback } from 'preact/compat';
 import { CartState, CartItem, LineItems } from './types/cart';
 import { LineItem, ProgressBar } from './components';
 import { BestSellers } from './components/BestSellers';
+import { formatPrice } from './utils/formatPrice';
 
 interface CartToastProps {
   cartTotalPrice: number;
@@ -327,11 +328,11 @@ export const CartToast: FC<CartToastProps> = ({
           )}
         </div>
         <div className={`cart-toast__footer`}>
-          <p>
+          <p className={`cart-toast__footer-text`}>
             <span>Subtotal:</span>
-            <span>{cartState.total_price}</span>
+            <span className={`cart-toast__footer-price`}>{formatPrice(cartState.total_price || 0)}</span>
           </p>
-          <a href="/checkout">Go To Checkout</a>
+          <a className={`cart-toast__checkout-button`} href="/checkout">Go To Checkout</a>
         </div>
       </div>
     </>
