@@ -5,17 +5,25 @@ import { getBestSellers, getProductId } from '../utils/getBestSellers';
 export const BestSellers: FC = () => {
   const [bestSellers, setBestSellers] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     const fetchBestSellers = async () => {
       setIsLoading(true);
+      setHasError(false);
+      
       try {
-        const productId = await getProductId(); // Replace with actual product ID
-        const intent = 'related'; // Replace with actual intent
+        const productId = await getProductId();
+        const intent = 'related';
+        
+        // Add a small delay to show loading state (can be removed in production)
+        await new Promise(resolve => setTimeout(resolve, 800));
+        
         const bestSellersData = await getBestSellers({ productId, intent });
         setBestSellers(bestSellersData);
       } catch (error) {
         console.error('Error fetching best sellers:', error);
+        setHasError(true);
       } finally {
         setIsLoading(false);
       }
@@ -31,8 +39,44 @@ export const BestSellers: FC = () => {
           <div key={placeholder} className="cart-toast__best-sellers-loading-item">
             <div className="cart-toast__best-sellers-loading-image"></div>
             <div className="cart-toast__best-sellers-loading-text"></div>
+            <div className="cart-toast__best-sellers-loading-text" style={{ width: '60%', marginTop: '8px' }}></div>
           </div>
         ))}
+      </div>
+    );
+  }
+  
+  if (hasError || bestSellers.length === 0) {
+    return (
+      <div className="cart-toast__best-sellers-error">
+        <p>Unable to load product recommendations.</p>
+        <button 
+          onClick={() => {
+            setIsLoading(true);
+            // Re-fetch best sellers
+            setBestSellers([]);
+            setHasError(false);
+            
+            const fetchBestSellers = async () => {
+              try {
+                const productId = await getProductId();
+                const intent = 'related';
+                const bestSellersData = await getBestSellers({ productId, intent });
+                setBestSellers(bestSellersData);
+              } catch (error) {
+                console.error('Error fetching best sellers:', error);
+                setHasError(true);
+              } finally {
+                setIsLoading(false);
+              }
+            };
+            
+            fetchBestSellers();
+          }}
+          className="cart-toast__best-sellers-retry"
+        >
+          Try Again
+        </button>
       </div>
     );
   }

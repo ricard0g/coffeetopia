@@ -776,3 +776,107 @@
     font-size: 1.5rem;
   }
 }
+
+/* Best Sellers Loading State - Enhanced */
+.cart-toast__best-sellers-loading {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  column-gap: 10px;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.cart-toast__best-sellers-loading-item {
+  width: 30%;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.cart-toast__best-sellers-loading-image {
+  width: 100%;
+  height: 150px;
+  background-color: #eadfcb;
+  border-radius: 15px;
+  margin-bottom: 10px;
+  animation: shimmer 1.5s infinite linear;
+  background: linear-gradient(
+    to right,
+    #eadfcb 8%,
+    #f2ece1 18%,
+    #eadfcb 33%
+  );
+  background-size: 800px 104px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cart-toast__best-sellers-loading-image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150px;
+  width: 150px;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0.6) 50%,
+    transparent 100%
+  );
+  animation: shimmer-overlay 2s infinite;
+}
+
+@keyframes shimmer-overlay {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(400px);
+  }
+}
+
+.cart-toast__best-sellers-loading-text {
+  width: 80%;
+  height: 15px;
+  background-color: #eadfcb;
+  border-radius: 5px;
+  animation: shimmer 1.5s infinite linear;
+  background: linear-gradient(
+    to right,
+    #eadfcb 8%,
+    #f2ece1 18%,
+    #eadfcb 33%
+  );
+  background-size: 800px 104px;
+}
+
+/* Best Sellers Error State */
+.cart-toast__best-sellers-error {
+  text-align: center;
+  padding: 20px;
+  color: #635140f7;
+}
+
+.cart-toast__best-sellers-error p {
+  margin-bottom: 15px;
+  font-size: 1.6rem;
+}
+
+.cart-toast__best-sellers-retry {
+  background-color: #de9151;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cart-toast__best-sellers-retry:hover {
+  background-color: #bb7937;
+}
