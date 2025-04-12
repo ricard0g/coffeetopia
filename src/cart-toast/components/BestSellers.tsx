@@ -17,7 +17,7 @@ export const BestSellers: FC = () => {
         const intent = 'related';
         
         // Add a small delay to show loading state (can be removed in production)
-        await new Promise(resolve => setTimeout(resolve, 800));
+        await new Promise(resolve => setTimeout(resolve, 300));
         
         const bestSellersData = await getBestSellers({ productId, intent });
         setBestSellers(bestSellersData);

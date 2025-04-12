@@ -7,11 +7,9 @@ interface GetBestSellersParams {
 
 export const getBestSellers = async ({ productId, intent }: GetBestSellersParams): Promise<Product[]> => {
   try {
-    console.log(productId);
     const response = await fetch(`/recommendations/products.json?product_id=${productId}&intent=${intent}`, {
       method: 'GET',
     });
-    console.log(response);
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

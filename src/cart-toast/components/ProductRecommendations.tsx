@@ -1,12 +1,15 @@
 import { FC, useEffect, useState } from 'preact/compat';
 import { Product } from '../types/products';
 import { getBestSellers } from '../utils/getBestSellers';
+import { addToCart } from '../utils/addToCart';
+import { formatPrice } from '../utils/formatPrice';
 
 interface ProductRecommendationsProps {
   productId: number;
+  updateCart: (itemId: number, quantity: number) => Promise<void>;
 }
 
-export const ProductRecommendations: FC<ProductRecommendationsProps> = ({ productId }) => {
+export const ProductRecommendations: FC<ProductRecommendationsProps> = ({ productId, updateCart }) => {
   const [productRecommendations, setProductRecommendations] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -17,10 +20,8 @@ export const ProductRecommendations: FC<ProductRecommendationsProps> = ({ produc
         const intent = 'related';
 
         await new Promise((resolve) => setTimeout(resolve, 800)); // Simulate loading delay
-        console.log(productId);
 
         const productRecommendationsData = await getBestSellers({ productId, intent });
-        console.log(productRecommendationsData);
         setProductRecommendations(productRecommendationsData);
       } catch (e) {
         console.error('Error fetching product recommendations:', e);
@@ -30,7 +31,7 @@ export const ProductRecommendations: FC<ProductRecommendationsProps> = ({ produc
     };
 
     fetchProductRecommendations();
-  }, []);
+  }, [updateCart]);
 
   if (isLoading) {
     return (
@@ -46,11 +47,49 @@ export const ProductRecommendations: FC<ProductRecommendationsProps> = ({ produc
     );
   }
 
+  const handleAddToCart = (productId: number, quantity: number) => {
+    const formData = {
+      items: [
+        {
+          id: productId,
+          quantity: quantity,
+        },
+      ],
+    };
+
+    addToCart({ formData });
+    updateCart(productId, quantity);
+  };
+
   return (
-    <div>
-      <ul>
+    <div className={`cart-toast__product-recommendations`}>
+      <h4 className={`cart-toast__product-recommendations-heading`}>
+        {productRecommendations.length ? 'You May Also Like 🎉' : null}
+      </h4>
+      <ul className={`cart-toast__product-recommendations-list`}>
         {productRecommendations.map((product) => (
-          <li>{product.title}</li>
+          <li key={product.id} className={`cart-toast__product-recommendation-item`}>
+            <figure className={`cart-toast__product-recommendation-figure`}>
+              <img
+                className={`cart-toast__product-recommendation-img`}
+                src={product.featured_image}
+                width="50px"
+                height="50px"
+              />
+              <figcaption>
+                <h5>
+                  <a href={product.url}>{product.title}</a>
+                </h5>
+                <p className={`cart-toast__product-recommendation-price`}>{formatPrice(product.price)}</p>
+                <button
+                  className={`cart-toast__product-recommendation-add-btn`}
+                  onClick={() => handleAddToCart(product.variants[0].id, 1)}
+                >
+                  Add To Cart
+                </button>
+              </figcaption>
+            </figure>
+          </li>
         ))}
       </ul>
     </div>

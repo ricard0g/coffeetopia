@@ -22,8 +22,8 @@ export const CartToast: FC<CartToastProps> = ({
   const [cartTotalPrice, setCartTotalPrice] = useState(initialCartTotalPrice);
   const [cartOriginalTotalPrice, setCartOriginalTotalPrice] = useState<number>(initialCartOriginalTotalPrice / 100);
   const [opened, setOpened] = useState(false);
-  const maxPriceBoost: number = 72;
   const [loadingItemIds, setLoadingItemIds] = useState<number[]>([]);
+  const maxPriceBoost: number = 72;
 
   // Add state for line items
   const [lineItems, setLineItems] = useState<LineItems>(() => {
@@ -86,6 +86,7 @@ export const CartToast: FC<CartToastProps> = ({
           return newState;
         });
       }
+      console.log('Updated Cart', cartState);
     } catch (error) {
       console.error('Error updating cart:', error);
     } finally {
@@ -155,6 +156,7 @@ export const CartToast: FC<CartToastProps> = ({
       }
     });
     setLineItems(updatedLineItems);
+    console.log('Cart State', cartState);
   };
 
   useEffect(() => {
@@ -319,10 +321,7 @@ export const CartToast: FC<CartToastProps> = ({
                     );
                   })}
                 </ul>
-                {/* {cartState.items && cartState.items.length > 0 ? (
-                  <ProductRecommendations productId={cartState.items[0].id} />
-                ) : null} */} 
-                <ProductRecommendations productId={cartState.items?.[0]?.id ?? 0} />
+                <ProductRecommendations updateCart={updateCart} productId={cartState.items?.[0].product_id ?? 0} />
               </div>
             </>
           ) : (
