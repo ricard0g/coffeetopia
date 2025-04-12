@@ -3,6 +3,7 @@ import { CartState, CartItem, LineItems } from './types/cart';
 import { LineItem, ProgressBar } from './components';
 import { BestSellers } from './components/BestSellers';
 import { formatPrice } from './utils/formatPrice';
+import { ProductRecommendations } from './components/ProductRecommendations';
 
 interface CartToastProps {
   cartTotalPrice: number;
@@ -46,7 +47,7 @@ export const CartToast: FC<CartToastProps> = ({
 
   // Add update cart function
   const updateCart = async (itemId: number, quantity: number) => {
-    setLoadingItemIds(prev => [...prev, itemId]);
+    setLoadingItemIds((prev) => [...prev, itemId]);
     const formData = new FormData();
     formData.append(`updates[${itemId}]`, String(quantity));
 
@@ -88,7 +89,7 @@ export const CartToast: FC<CartToastProps> = ({
     } catch (error) {
       console.error('Error updating cart:', error);
     } finally {
-      setLoadingItemIds(prev => prev.filter(id => id !== itemId));
+      setLoadingItemIds((prev) => prev.filter((id) => id !== itemId));
     }
   };
 
@@ -318,6 +319,10 @@ export const CartToast: FC<CartToastProps> = ({
                     );
                   })}
                 </ul>
+                {/* {cartState.items && cartState.items.length > 0 ? (
+                  <ProductRecommendations productId={cartState.items[0].id} />
+                ) : null} */} 
+                <ProductRecommendations productId={cartState.items?.[0]?.id ?? 0} />
               </div>
             </>
           ) : (
