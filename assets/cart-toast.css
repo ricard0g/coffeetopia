@@ -194,26 +194,26 @@
   max-height: 70%;
   overflow-y: scroll;
   scrollbar-width: thin;
-  scrollbar-color: #de9151 #eadfcb;  /* thumb and track color */
+  scrollbar-color: #de9151 #eadfcb; /* thumb and track color */
 }
 
 /* Scrollbar styling for cart-toast__content */
 .cart-toast__content::-webkit-scrollbar {
-  width: 8px;  /* width of the scrollbar */
+  width: 8px; /* width of the scrollbar */
 }
 
 .cart-toast__content::-webkit-scrollbar-track {
-  background: #eadfcb;  /* track color - matching your theme background */
+  background: #eadfcb; /* track color - matching your theme background */
   border-radius: 10px;
 }
 
 .cart-toast__content::-webkit-scrollbar-thumb {
-  background: #8b603d;  /* thumb color - using your theme accent color */
+  background: #8b603d; /* thumb color - using your theme accent color */
   border-radius: 10px;
 }
 
 .cart-toast__content::-webkit-scrollbar-thumb:hover {
-  background: #bb7937;  /* thumb color on hover - using darker shade */
+  background: #bb7937; /* thumb color on hover - using darker shade */
 }
 
 .cart-toast__item {
@@ -553,11 +553,12 @@
 
   .cart-toast__content {
     overflow-y: scroll;
+    height: 65%;
+    max-height: 65%;
   }
 
   .cart-toast__empty-cart-wrapper {
     width: 85%;
-    /* margin: 8vh auto; */
     margin-top: 8vh;
   }
 
@@ -706,12 +707,7 @@
   border-radius: 15px;
   margin-bottom: 10px;
   animation: shimmer 1.5s infinite linear;
-  background: linear-gradient(
-    to right,
-    #eadfcb 8%,
-    #f2ece1 18%,
-    #eadfcb 33%
-  );
+  background: linear-gradient(to right, #eadfcb 8%, #f2ece1 18%, #eadfcb 33%);
   background-size: 800px 104px;
 }
 
@@ -721,12 +717,7 @@
   background-color: #eadfcb;
   border-radius: 5px;
   animation: shimmer 1.5s infinite linear;
-  background: linear-gradient(
-    to right,
-    #eadfcb 8%,
-    #f2ece1 18%,
-    #eadfcb 33%
-  );
+  background: linear-gradient(to right, #eadfcb 8%, #f2ece1 18%, #eadfcb 33%);
   background-size: 800px 104px;
 }
 
@@ -771,7 +762,7 @@
   .cart-toast__best-sellers-loading-image {
     height: 100px;
   }
-  
+
   .cart-toast__loading {
     font-size: 1.5rem;
   }
@@ -803,12 +794,7 @@
   border-radius: 15px;
   margin-bottom: 10px;
   animation: shimmer 1.5s infinite linear;
-  background: linear-gradient(
-    to right,
-    #eadfcb 8%,
-    #f2ece1 18%,
-    #eadfcb 33%
-  );
+  background: linear-gradient(to right, #eadfcb 8%, #f2ece1 18%, #eadfcb 33%);
   background-size: 800px 104px;
   position: relative;
   overflow: hidden;
@@ -821,12 +807,7 @@
   left: -150px;
   width: 150px;
   height: 100%;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    rgba(255, 255, 255, 0.6) 50%,
-    transparent 100%
-  );
+  background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.6) 50%, transparent 100%);
   animation: shimmer-overlay 2s infinite;
 }
 
@@ -845,12 +826,7 @@
   background-color: #eadfcb;
   border-radius: 5px;
   animation: shimmer 1.5s infinite linear;
-  background: linear-gradient(
-    to right,
-    #eadfcb 8%,
-    #f2ece1 18%,
-    #eadfcb 33%
-  );
+  background: linear-gradient(to right, #eadfcb 8%, #f2ece1 18%, #eadfcb 33%);
   background-size: 800px 104px;
 }
 
