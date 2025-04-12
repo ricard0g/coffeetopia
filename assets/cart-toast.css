@@ -553,8 +553,8 @@
 
   .cart-toast__content {
     overflow-y: scroll;
-    height: 65%;
-    max-height: 65%;
+    height: 68%;
+    max-height: 70%;
   }
 
   .cart-toast__empty-cart-wrapper {
