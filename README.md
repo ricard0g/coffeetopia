@@ -50,6 +50,11 @@ Also does:
     - Shows "Best Sellers" collection when cart is empty throught the [Product Recommendation API](https://shopify.dev/docs/api/ajax/reference/product-recommendations)
     - Shows related product the visitor "May Like" in a card grid where they can add to cart the product directly from the cart
     - All prices are reactive to the addition/substraction of any product. When a new tiered is reached, discounted price is shown below the normal price in red.
-    - Same for the Progress Bar. "Spend [X Amount], get [Y%] off" is reactive to any changes inside the cart, making it very accurate and dynamic.
+    - Same for the Progress Bar. _"Spend [X Amount], get [Y%] off"_ is reactive to any changes inside the cart, making it very accurate and dynamic.
 - Useful for:
-    - 
+    - Gamifying the Shopping Experience and nudge the customers to spend more. By visually showing progress towards discounts, this feature taps into the psychology of motivation and reward, which drives engagement.
+- Impactful in metrics like:
+    - **Average Order Value 🧾**: customers are incetivized to add more items to hit those discount tiers
+    - **Conversion Rate 🎯**: clear incetives could push hesitant shoppers to complete their purchase
+    - **Cart Abandonment  Rate 🛫**: Cart Abandonment Rate decreases by keeping shoppers focused on reaching the next tier, and even increase customer satisfaction, as the rewarding system makes shopping feel more fun and tailored.
+    Also the fact that customers don't need to leave the cart to add more items to their order.
